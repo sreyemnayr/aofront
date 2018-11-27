@@ -12,7 +12,7 @@ const routes: Routes = [
   {
     path: 'settings',
     component: SettingsContainerComponent,
-    data: { title: 'anms.menu.settings' }
+    data: { title: 'aofront.menu.settings' }
   },
   {
     path: 'examples',

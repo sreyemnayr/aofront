@@ -6,7 +6,7 @@
         <name></name>
         <children>
             <folder_node>
-                <name>anms</name>
+                <name>aofront</name>
                 <children>
                     <folder_node>
                         <name>about</name>
