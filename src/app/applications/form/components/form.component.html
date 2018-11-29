@@ -1,0 +1,112 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h1 class="main-heading">{{ 'aofront.applications.form.title' | translate }}</h1>
+    </div>
+  </div>
+  <ng-container *ngIf="formValueChanges$ | async as updatedForm">
+    {{update(updatedForm)}}
+  </ng-container>
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <mat-card>
+          <span class="d-flex justify-content-between align-items-baseline">
+            <h2>{{ 'aofront.applications.form.subtitle1' | translate }}</h2>
+            <mat-slide-toggle formControlName="autosave">
+              {{ 'aofront.applications.form.autosave' | translate }}
+            </mat-slide-toggle>
+          </span>
+          <div class="row">
+            <mat-form-field class="col" [ngClass]="routeAnimationsElements">
+              <input matInput placeholder="{{ 'aofront.applications.form.placeholder1' | translate }}"
+                formControlName="username">
+              <mat-error *ngIf="form.get('username').invalid">
+                {{ 'aofront.applications.form.placeholder1' | translate }}
+                {{ 'aofront.applications.form.error1' | translate }}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class="col" [ngClass]="routeAnimationsElements">
+              <input matInput type="password" placeholder="{{ 'aofront.applications.form.placeholder2' | translate }}"
+                formControlName="password">
+              <mat-error *ngIf="form.get('password').invalid">
+                {{ 'aofront.applications.form.placeholder2' | translate }}
+                {{ 'aofront.applications.form.error1' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col" [ngClass]="routeAnimationsElements">
+              <input matInput placeholder="{{ 'aofront.applications.form.placeholder3' | translate }}"
+                formControlName="email" type="email">
+              <mat-error *ngIf="form.get('email').hasError('required')">
+                {{ 'aofront.applications.form.placeholder3' | translate }}
+                {{ 'aofront.applications.form.error1' | translate }}
+              </mat-error>
+              <mat-error *ngIf="form.get('email').hasError('email')">
+                {{ 'aofront.applications.form.placeholder3' | translate }}
+                {{ 'aofront.applications.form.error2' | translate }}</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col" [ngClass]="routeAnimationsElements">
+              <input matInput formControlName="birthday" [matDatepicker]="picker" placeholder="{{ 'aofront.applications.form.placeholder5' | translate }}">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              <mat-error *ngIf="form.get('birthday').hasError('required')">
+                {{ 'aofront.applications.form.placeholder5' | translate }}
+                {{ 'aofront.applications.form.error1' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col" [ngClass]="routeAnimationsElements">
+              <textarea matInput placeholder="{{ 'aofront.applications.form.placeholder4' | translate }}"
+                formControlName="description" minlength="10" maxlength="1000" cdkTextareaAutosize
+                #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="3" cdkAutosizeMaxRows="10"></textarea>
+              <mat-hint align="end">{{form.get('description').value?.length}} /
+                1000</mat-hint>
+              <mat-error *ngIf="form.get('description').hasError('required')">
+                {{ 'aofront.applications.form.placeholder4' | translate }}
+                {{ 'aofront.applications.form.error1' | translate }}
+              </mat-error>
+              <mat-error *ngIf="form.get('description').hasError('minlength')">
+                {{ 'aofront.applications.form.placeholder4' | translate }}
+                {{ 'aofront.applications.form.error3' | translate }} 10
+              </mat-error>
+              <mat-error *ngIf="form.get('description').hasError('maxlength')">
+                {{ 'aofront.applications.form.placeholder4' | translate }}
+                {{ 'aofront.applications.form.error4' | translate }} 1000
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="row" [ngClass]="routeAnimationsElements">
+            <div class="col">
+              <label>{{ 'aofront.applications.form.text2' | translate }}</label>
+              <br>
+              <mat-slider thumbLabel tickInterval="1" min="1" max="10" formControlName="rating"></mat-slider>
+            </div>
+          </div>
+          <div class="row">
+            <mat-checkbox class="col" formControlName="requestGift" [ngClass]="routeAnimationsElements">
+              {{ 'aofront.applications.form.text1' | translate }}
+            </mat-checkbox>
+          </div>
+          <div class="row buttons d-flex justify-content-between pad">
+            <button mat-raised-button color="primary" [ngClass]="routeAnimationsElements">
+              {{ 'aofront.applications.form.send' | translate }}
+            </button>
+            <button type="button" mat-raised-button color="accent" [disabled]="form.get('autosave').value"
+              [ngClass]="routeAnimationsElements" (click)="save()">
+              {{ 'aofront.applications.form.save' | translate }}
+            </button>
+            <button type="reset" mat-raised-button (click)="reset()" [ngClass]="routeAnimationsElements">
+              {{ 'aofront.applications.form.reset' | translate }}
+            </button>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+  </form>
+
+</div>

@@ -1,0 +1,44 @@
+<div class="container">
+
+  <div class="row">
+    <div class="col-12">
+      <h1 class="main-heading">{{ 'aofront.applications.notifications.title' | translate }}</h1>
+    </div>
+  </div>
+  
+  <div class="row item" [ngClass]="routeAnimationsElements">
+    <button mat-raised-button class="col-3 default" (click)="default()">
+      {{ 'aofront.applications.notifications.default.title' | translate }}
+    </button>
+    <p class="col-9">{{ 'aofront.applications.notifications.default.description' | translate }}</p>
+  </div>
+
+  <div class="row item" [ngClass]="routeAnimationsElements">
+    <button mat-raised-button class="col-3 information" (click)="info()">
+      {{ 'aofront.applications.notifications.info.title' | translate }}
+    </button>
+    <p class="col-9">{{ 'aofront.applications.notifications.info.description' | translate }}</p>
+  </div>
+
+  <div class="row item" [ngClass]="routeAnimationsElements">
+    <button mat-raised-button class="col-3 success" (click)="success()">
+      {{ 'aofront.applications.notifications.success.title' | translate }}
+    </button>
+    <p class="col-9">{{ 'aofront.applications.notifications.success.description' | translate }}</p>
+  </div>
+
+  <div class="row item" [ngClass]="routeAnimationsElements">
+    <button mat-raised-button class="col-3 warning" (click)="warn()">
+      {{ 'aofront.applications.notifications.warning.title' | translate }}
+    </button>
+    <p class="col-9">{{ 'aofront.applications.notifications.warning.description' | translate }}</p>
+  </div>
+
+  <div class="row item" [ngClass]="routeAnimationsElements" >
+    <button mat-raised-button class="col-3 error" (click)="error()">
+      {{ 'aofront.applications.notifications.error.title' | translate }}
+    </button>
+    <p class="col-9">{{ 'aofront.applications.notifications.error.description' | translate }}</p>
+  </div>
+
+</div>
