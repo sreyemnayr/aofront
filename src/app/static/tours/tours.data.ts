@@ -9,32 +9,32 @@ export interface Feature {
   medium?: string;
 }
 
-export const features: Feature[] = [
+export const tours: Feature[] = [
   {
     name: 'Angular',
     version: env.versions.angular,
-    description: 'aofront.features.angular',
+    description: 'aofront.tours.angular',
     github: 'https://github.com/angular/angular',
     documentation: 'https://angular.io/docs/ts/latest/'
   },
   {
     name: 'Angular Material',
     version: env.versions.material,
-    description: 'aofront.features.angular-material',
+    description: 'aofront.tours.angular-material',
     github: 'https://github.com/angular/material2/',
     documentation: 'https://material.angular.io/'
   },
   {
     name: 'Angular Cli',
     version: env.versions.angularCli,
-    description: 'aofront.features.angular-cli',
+    description: 'aofront.tours.angular-cli',
     github: 'https://github.com/angular/angular-cli',
     documentation: 'https://cli.angular.io/'
   },
   {
     name: 'NgRx',
     version: env.versions.ngrx,
-    description: 'aofront.features.ngrx',
+    description: 'aofront.tours.ngrx',
     github: 'https://github.com/ngrx/platform',
     documentation: 'http://ngrx.github.io/',
     medium:
@@ -43,7 +43,7 @@ export const features: Feature[] = [
   {
     name: 'RxJS',
     version: env.versions.rxjs,
-    description: 'aofront.features.rxjs',
+    description: 'aofront.tours.rxjs',
     github: 'https://github.com/ReactiveX/RxJS',
     documentation: 'http://reactivex.io/rxjs/',
     medium:
@@ -52,7 +52,7 @@ export const features: Feature[] = [
   {
     name: 'Bootstrap',
     version: env.versions.bootstrap,
-    description: 'aofront.features.bootstrap',
+    description: 'aofront.tours.bootstrap',
     github: 'https://github.com/twbs/bootstrap',
     documentation: 'https://getbootstrap.com/docs/4.0/layout/grid/',
     medium:
@@ -61,41 +61,41 @@ export const features: Feature[] = [
   {
     name: 'Typescript',
     version: env.versions.typescript,
-    description: 'aofront.features.typescript',
+    description: 'aofront.tours.typescript',
     github: 'https://github.com/Microsoft/TypeScript',
     documentation: 'https://www.typescriptlang.org/docs/home.html'
   },
   {
     name: 'I18n',
     version: env.versions.ngxtranslate,
-    description: 'aofront.features.ngxtranslate',
+    description: 'aofront.tours.ngxtranslate',
     github: 'https://github.com/ngx-translate/core',
     documentation: 'http://www.ngx-translate.com/'
   },
   {
     name: 'Font Awesome 5',
     version: env.versions.fontAwesome,
-    description: 'aofront.features.fontawesome',
+    description: 'aofront.tours.fontawesome',
     github: 'https://github.com/FortAwesome/Font-Awesome',
     documentation: 'https://fontawesome.com/icons'
   },
   {
     name: 'Cypress',
     version: env.versions.cypress,
-    description: 'aofront.features.cypress',
+    description: 'aofront.tours.cypress',
     github: 'https://github.com/cypress-io/cypress',
     documentation: 'https://www.cypress.io/'
   },
   {
-    name: 'aofront.features.themes.title',
-    description: 'aofront.features.themes.description',
+    name: 'aofront.tours.themes.title',
+    description: 'aofront.tours.themes.description',
     documentation: 'https://material.angular.io/guide/theming',
     medium:
       'https://medium.com/@tomastrajan/the-complete-guide-to-angular-material-themes-4d165a9d24d1'
   },
   {
-    name: 'aofront.features.lazyloading.title',
-    description: 'aofront.features.lazyloading.description',
+    name: 'aofront.tours.lazyloading.title',
+    description: 'aofront.tours.lazyloading.description',
     documentation:
       'https://angular.io/guide/router#lazy-loading-route-configuration'
   }

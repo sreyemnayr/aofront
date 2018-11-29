@@ -32,11 +32,11 @@ export class AppComponent implements OnInit {
   envName = env.envName;
   version = env.versions.app;
   year = new Date().getFullYear();
-  logo = require('../assets/logo.png');
+  logo = require('../assets/logo-inverted.png');
   languages = ['en', 'de', 'sk', 'fr', 'es', 'pt-br'];
   navigation = [
     { link: 'about', label: 'aofront.menu.about' },
-    { link: 'features', label: 'aofront.menu.features' },
+    { link: 'tours', label: 'aofront.menu.tours' },
     { link: 'applications', label: 'aofront.menu.applications' }
   ];
   navigationSideMenu = [

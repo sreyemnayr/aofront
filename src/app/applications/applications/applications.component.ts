@@ -21,6 +21,7 @@ export class ApplicationsComponent implements OnInit {
   isAuthenticated$: Observable<boolean>;
 
   applications = [
+    { link: 'newstudent', label: 'aofront.applications.menu.newstudent' },
     { link: 'todos', label: 'aofront.applications.menu.todos' },
     { link: 'stock-market', label: 'aofront.applications.menu.stocks' },
     { link: 'theming', label: 'aofront.applications.menu.theming' },

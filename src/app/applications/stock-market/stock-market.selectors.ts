@@ -1,8 +1,8 @@
 import { createSelector } from '@ngrx/store';
 
-import { applicationsState, selectapplications } from '../applications.state';
+import { ApplicationsState, selectapplications } from '../applications.state';
 
 export const selectStockMarket = createSelector(
   selectapplications,
-  (state: applicationsState) => state.stocks
+  (state: ApplicationsState) => state.stocks
 );

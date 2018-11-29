@@ -1,7 +1,14 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { FormGroup } from '@angular/forms';
+import { ROUTE_ANIMATIONS_ELEMENTS, NotificationService } from '@app/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { FormlyFieldConfig } from '@ngx-formly/core';
+import { select, Store } from '@ngrx/store';
+import { State } from '@app/applications/applications.state';
+import { debounceTime, filter, take } from 'rxjs/operators';
+import { Form } from '@app/applications/form/form.model';
+import { selectFormState } from '@app/applications/form/form.selectors';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'aofront-newstudent',
@@ -10,21 +17,32 @@ import { FormlyFieldConfig } from '@ngx-formly/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewstudentComponent implements OnInit {
+  routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;
+
   form = new FormGroup({});
   model = {
-    first_name: 'First',
-    preferred_name: 'Preferred',
-    middle_name: 'Middle',
-    last_name: 'Last'
+    first_name: '',
+    preferred_name: '',
+    middle_name: '',
+    last_name: ''
   };
   fields: FormlyFieldConfig[] = [
+    {
+      key: 'autosave',
+      type: 'toggle',
+      templateOptions: {
+        label: 'Autosave',
+        description: 'Autosave progress?',
+        required: false
+      }
+    },
     {
       key: 'first_name',
       type: 'input',
       templateOptions: {
         // type: 'email',
         label: 'First name',
-        placeholder: 'Enter first name',
+
         required: true
       }
     },
@@ -34,7 +52,7 @@ export class NewstudentComponent implements OnInit {
       templateOptions: {
         // type: 'email',
         label: 'Preferred name',
-        placeholder: 'Enter first name',
+
         required: true
       }
     },
@@ -44,7 +62,7 @@ export class NewstudentComponent implements OnInit {
       templateOptions: {
         // type: 'email',
         label: 'Middle name',
-        placeholder: 'Enter middle name',
+
         required: true
       }
     },
@@ -53,18 +71,37 @@ export class NewstudentComponent implements OnInit {
       type: 'input',
       templateOptions: {
         // type: 'email',
-        label: 'Preferred name',
-        placeholder: 'Enter first name',
+        label: 'Last name',
+
         required: true
       }
     }
   ];
 
+  formValueChanges$: Observable<Form>;
+
+  constructor(
+    // private fb: FormBuilder,
+    private store: Store<State>,
+    private translate: TranslateService,
+    private notificationService: NotificationService
+  ) {}
+
   submit(model) {
     console.log(model);
+    this.notificationService.info(model.first_name);
   }
 
-  constructor() {}
-
-  ngOnInit() {}
+  ngOnInit() {
+    this.formValueChanges$ = this.form.valueChanges.pipe(
+      debounceTime(500),
+      filter((form: Form) => form.autosave)
+    );
+    this.store
+      .pipe(
+        select(selectFormState),
+        take(1)
+      )
+      .subscribe(form => this.form.patchValue(form.form));
+  }
 }

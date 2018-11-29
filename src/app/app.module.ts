@@ -24,7 +24,7 @@ import { FormlyMaterialModule } from '@ngx-formly/material';
     CoreModule,
     SharedModule,
 
-    // features
+    // tours
     StaticModule,
     SettingsModule,
 

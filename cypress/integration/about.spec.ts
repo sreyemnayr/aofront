@@ -4,7 +4,7 @@ describe('About', () => {
   });
 
   it('should display main heading', () => {
-    cy.get('h1').should('contain', 'Angular NgRx Material Starter');
+    cy.get('h1').should('contain', 'Apply Online');
   });
 
   it('should display "Geting Started" section', () => {

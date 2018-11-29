@@ -16,7 +16,7 @@ const routes: Routes = [
   },
   {
     path: 'applications',
-    loadChildren: 'app/applications/applications.module#applicationsModule'
+    loadChildren: 'app/applications/applications.module#ApplicationsModule'
   },
   {
     path: '**',

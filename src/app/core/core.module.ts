@@ -46,7 +46,7 @@ import { FormlyMaterialModule } from '@ngx-formly/material';
     environment.production
       ? []
       : StoreDevtoolsModule.instrument({
-          name: 'Angular NgRx Material Starter'
+          name: 'Apply Online'
         }),
 
     // 3rd party

@@ -2,17 +2,17 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 import { ROUTE_ANIMATIONS_ELEMENTS } from '@app/core';
 
-import { Feature, features } from './features.data';
+import { Feature, tours } from './tours.data';
 
 @Component({
-  selector: 'aofront-features',
-  templateUrl: './features.component.html',
-  styleUrls: ['./features.component.scss'],
+  selector: 'aofront-tours',
+  templateUrl: './tours.component.html',
+  styleUrls: ['./tours.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FeaturesComponent implements OnInit {
+export class ToursComponent implements OnInit {
   routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;
-  features: Feature[] = features;
+  tours: Feature[] = tours;
 
   ngOnInit() {}
 

@@ -14,6 +14,7 @@ import { FormlyModule } from '@ngx-formly/core';
 
 // for material2 import `FormlyMaterialModule`:
 import { FormlyMaterialModule } from '@ngx-formly/material';
+import { FormlyMatToggleModule } from '@ngx-formly/material/toggle';
 
 import { FEATURE_NAME, reducers } from './applications.state';
 import { ApplicationsRoutingModule } from './applications-routing.module';
@@ -34,6 +35,8 @@ import { NotificationsComponent } from './notifications/components/notifications
 import { NewstudentComponent } from './newstudent/newstudent.component';
 
 import { ApplicationsEffects } from './applications.effects';
+import { PanelWrapperComponent } from './newstudent/panel-wrapper/panel-wrapper.component';
+import { InputComponent } from './newstudent/formly-types/input/input.component';
 
 @NgModule({
   imports: [
@@ -55,9 +58,20 @@ import { ApplicationsEffects } from './applications.effects';
       BooksEffects,
       FormEffects
     ]),
-    FormlyModule.forRoot(),
+    FormlyModule.forRoot({
+      types: [
+        {
+          name: 'input',
+          component: InputComponent
+        }
+      ],
+      validationMessages: [
+        { name: 'required', message: 'This field is required' }
+      ]
+    }),
     // FormlyBootstrapModule,
-    FormlyMaterialModule
+    FormlyMaterialModule,
+    FormlyMatToggleModule
   ],
   declarations: [
     ApplicationsComponent,
@@ -69,11 +83,13 @@ import { ApplicationsEffects } from './applications.effects';
     CrudComponent,
     FormComponent,
     NotificationsComponent,
-    NewstudentComponent
+    NewstudentComponent,
+    PanelWrapperComponent,
+    InputComponent
   ],
   providers: [StockMarketService]
 })
-export class applicationsModule {
+export class ApplicationsModule {
   constructor() {}
 }
 

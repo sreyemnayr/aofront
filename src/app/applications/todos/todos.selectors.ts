@@ -1,10 +1,10 @@
 import { createSelector } from '@ngrx/store';
 
-import { applicationsState, selectapplications } from '../applications.state';
+import { ApplicationsState, selectapplications } from '../applications.state';
 
 export const selectTodosState = createSelector(
   selectapplications,
-  (state: applicationsState) => state.todos
+  (state: ApplicationsState) => state.todos
 );
 
 export const selectTodosItems = createSelector(
