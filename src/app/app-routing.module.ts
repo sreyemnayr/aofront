@@ -15,8 +15,8 @@ const routes: Routes = [
     data: { title: 'aofront.menu.settings' }
   },
   {
-    path: 'examples',
-    loadChildren: 'app/examples/examples.module#ExamplesModule'
+    path: 'applications',
+    loadChildren: 'app/applications/applications.module#applicationsModule'
   },
   {
     path: '**',

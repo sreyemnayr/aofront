@@ -17,12 +17,12 @@
 @import 'app/app.component.scss-theme';
 @import 'app/shared/big-input/big-input.component.scss-theme';
 @import 'app/static/about/about.component.scss-theme';
-@import 'app/examples/notifications/components/notifications.component.scss-theme';
-@import 'app/examples/todos/components/todos-container.component.scss-theme';
-@import 'app/examples/stock-market/components/stock-market-container.component.scss-theme';
-@import 'app/examples/theming/parent/parent.component.scss-theme';
-@import 'app/examples/theming/child/child.component.scss-theme';
-@import 'app/examples/examples/examples.component.scss-theme';
+@import 'app/applications/notifications/components/notifications.component.scss-theme';
+@import 'app/applications/todos/components/todos-container.component.scss-theme';
+@import 'app/applications/stock-market/components/stock-market-container.component.scss-theme';
+@import 'app/applications/theming/parent/parent.component.scss-theme';
+@import 'app/applications/theming/child/child.component.scss-theme';
+@import 'app/applications/applications/applications.component.scss-theme';
 
 @mixin custom-components-theme($theme) {
   @include aofront-styles-reset-theme($theme);
@@ -34,7 +34,7 @@
   @include aofront-stock-market-container-component-theme($theme);
   @include aofront-parent-component-theme($theme);
   @include aofront-child-component-theme($theme);
-  @include aofront-examples-component-theme($theme);
+  @include aofront-applications-component-theme($theme);
 }
 
 .default-theme {

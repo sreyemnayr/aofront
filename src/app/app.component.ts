@@ -37,7 +37,7 @@ export class AppComponent implements OnInit {
   navigation = [
     { link: 'about', label: 'aofront.menu.about' },
     { link: 'features', label: 'aofront.menu.features' },
-    { link: 'examples', label: 'aofront.menu.examples' }
+    { link: 'applications', label: 'aofront.menu.applications' }
   ];
   navigationSideMenu = [
     ...this.navigation,

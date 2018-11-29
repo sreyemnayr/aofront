@@ -23,7 +23,12 @@ import { reducers, metaReducers } from './core.state';
 import { AppErrorHandler } from './error-handler/app-error-handler.service';
 import { CustomSerializer } from './router/custom-serializer';
 import { NotificationService } from './notifications/notification.service';
-import { GoogleAnalyticsEffects } from './google-analytics/google-analytics.effects';
+// import { GoogleAnalyticsEffects } from './google-analytics/google-analytics.effects';
+import { FormlyModule } from '@ngx-formly/core';
+// import {FormlyBootstrapModule} from '@ngx-formly/bootstrap';
+
+// for material2 import `FormlyMaterialModule`:
+import { FormlyMaterialModule } from '@ngx-formly/material';
 
 @NgModule({
   imports: [
@@ -34,7 +39,10 @@ import { GoogleAnalyticsEffects } from './google-analytics/google-analytics.effe
     // ngrx
     StoreModule.forRoot(reducers, { metaReducers }),
     StoreRouterConnectingModule.forRoot(),
-    EffectsModule.forRoot([AuthEffects, GoogleAnalyticsEffects]),
+    EffectsModule.forRoot([
+      AuthEffects
+      // GoogleAnalyticsEffects
+    ]),
     environment.production
       ? []
       : StoreDevtoolsModule.instrument({
@@ -48,7 +56,14 @@ import { GoogleAnalyticsEffects } from './google-analytics/google-analytics.effe
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       }
-    })
+    }),
+
+    // Formly
+    FormlyModule.forRoot(),
+    // FormlyBootstrapModule,
+
+    // for material2:
+    FormlyMaterialModule
   ],
   declarations: [],
   providers: [
