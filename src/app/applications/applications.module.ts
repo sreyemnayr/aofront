@@ -15,6 +15,8 @@ import { FormlyModule } from '@ngx-formly/core';
 // for material2 import `FormlyMaterialModule`:
 import { FormlyMaterialModule } from '@ngx-formly/material';
 import { FormlyMatToggleModule } from '@ngx-formly/material/toggle';
+import { FormlyMatDatepickerModule } from '@ngx-formly/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 import { FEATURE_NAME, reducers } from './applications.state';
 import { ApplicationsRoutingModule } from './applications-routing.module';
@@ -37,6 +39,7 @@ import { NewstudentComponent } from './newstudent/newstudent.component';
 import { ApplicationsEffects } from './applications.effects';
 import { PanelWrapperComponent } from './newstudent/panel-wrapper/panel-wrapper.component';
 import { InputComponent } from './newstudent/formly-types/input/input.component';
+import { RepeatComponent } from './newstudent/formly-types/repeat/repeat.component';
 
 @NgModule({
   imports: [
@@ -60,18 +63,19 @@ import { InputComponent } from './newstudent/formly-types/input/input.component'
     ]),
     FormlyModule.forRoot({
       types: [
-        {
-          name: 'input',
-          component: InputComponent
-        }
+        { name: 'input', component: InputComponent },
+        { name: 'repeat', component: RepeatComponent }
       ],
+      wrappers: [{ name: 'panel', component: PanelWrapperComponent }],
       validationMessages: [
         { name: 'required', message: 'This field is required' }
       ]
     }),
     // FormlyBootstrapModule,
     FormlyMaterialModule,
-    FormlyMatToggleModule
+    FormlyMatToggleModule,
+    MatNativeDateModule,
+    FormlyMatDatepickerModule
   ],
   declarations: [
     ApplicationsComponent,
@@ -85,7 +89,8 @@ import { InputComponent } from './newstudent/formly-types/input/input.component'
     NotificationsComponent,
     NewstudentComponent,
     PanelWrapperComponent,
-    InputComponent
+    InputComponent,
+    RepeatComponent
   ],
   providers: [StockMarketService]
 })

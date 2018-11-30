@@ -5,14 +5,14 @@ import { FieldWrapper } from '@ngx-formly/core';
 @Component({
   selector: 'formly-wrapper-panel',
   template: `
- <div class="card">
-   <h3 class="card-header">Its time to party</h3>
-   <h3 class="card-header">{{ to.label }}</h3>
-   <div class="card-body">
-     <ng-container #fieldComponent></ng-container>
-   </div>
- </div>
-`
+ <mat-card>
+      <mat-card-title>{{ field.templateOptions.label }}</mat-card-title>
+      <mat-card-content>
+        <ng-container #fieldComponent></ng-container>
+      </mat-card-content>
+ </mat-card>
+    <mat-divider></mat-divider>
+   `
 })
 export class PanelWrapperComponent extends FieldWrapper {
   @ViewChild('fieldComponent', { read: ViewContainerRef })

@@ -24,7 +24,9 @@ export class NewstudentComponent implements OnInit {
     first_name: '',
     preferred_name: '',
     middle_name: '',
-    last_name: ''
+    last_name: '',
+    dob: '',
+    schools_attended: [{}]
   };
   fields: FormlyFieldConfig[] = [
     {
@@ -37,43 +39,167 @@ export class NewstudentComponent implements OnInit {
       }
     },
     {
-      key: 'first_name',
-      type: 'input',
-      templateOptions: {
-        // type: 'email',
-        label: 'First name',
+      key: 'basic_info',
+      wrappers: ['panel'],
+      templateOptions: { label: 'Basic Information' },
+      fieldGroup: [
+        {
+          key: 'first_name',
+          type: 'input',
+          templateOptions: {
+            // type: 'email',
+            label: 'First name',
+            blur: () => {
+              const control = this.form.get('preferred_name');
+              if (!this.model.preferred_name) {
+                control.setValue(this.model.first_name);
+              }
+            },
 
-        required: true
+            required: true
+          }
+        },
+        {
+          key: 'preferred_name',
+          type: 'input',
+          templateOptions: {
+            // type: 'email',
+            label: 'Preferred name',
+
+            required: true
+          }
+        },
+        {
+          key: 'middle_name',
+          type: 'input',
+          templateOptions: {
+            // type: 'email',
+            label: 'Middle name',
+
+            required: false
+          }
+        },
+        {
+          key: 'last_name',
+          type: 'input',
+          templateOptions: {
+            // type: 'email',
+            label: 'Last name',
+
+            required: true
+          }
+        },
+
+        {
+          type: 'select',
+          key: 'gender',
+          templateOptions: {
+            label: 'Gender',
+            required: true,
+            options: [
+              { value: `M`, label: `Male` },
+              { value: `F`, label: `Female` },
+              { value: `X`, label: `Prefer to not answer` }
+            ]
+          }
+        },
+        {
+          key: 'dob',
+          type: 'datepicker',
+          templateOptions: {
+            label: 'Date of Birth',
+
+            description:
+              'If your child is not born yet, please indicate the projected due date.',
+            required: true
+          }
+        }
+      ]
+    },
+    {
+      key: 'schools_attended',
+      type: 'repeat',
+      fieldArray: {
+        fieldGroupClassName: 'row',
+        templateOptions: {
+          label: 'Schools attended',
+          btnText: 'Add a school'
+        },
+        fieldGroup: [
+          {
+            className: 'col-sm-4',
+            type: 'input',
+            key: 'name',
+            templateOptions: {
+              label: 'Name of School:',
+              required: true
+            }
+          },
+          {
+            type: 'datepicker',
+            key: 'start_date',
+            className: 'col-sm-3',
+            templateOptions: {
+              label: 'Start Date'
+            }
+          },
+          {
+            type: 'datepicker',
+            key: 'end_date',
+            className: 'col-sm-3',
+            templateOptions: {
+              label: 'End Date'
+            }
+          }
+        ]
       }
     },
     {
-      key: 'preferred_name',
-      type: 'input',
-      templateOptions: {
-        // type: 'email',
-        label: 'Preferred name',
-
-        required: true
-      }
-    },
-    {
-      key: 'middle_name',
-      type: 'input',
-      templateOptions: {
-        // type: 'email',
-        label: 'Middle name',
-
-        required: true
-      }
-    },
-    {
-      key: 'last_name',
-      type: 'input',
-      templateOptions: {
-        // type: 'email',
-        label: 'Last name',
-
-        required: true
+      key: 'evaluations',
+      type: 'repeat',
+      fieldArray: {
+        fieldGroupClassName: 'row',
+        templateOptions: {
+          label: 'Evaluations and Accomplishments',
+          btnText: '+'
+        },
+        fieldGroup: [
+          {
+            className: 'col-sm-3',
+            type: 'select',
+            key: 'type',
+            templateOptions: {
+              label: 'Category',
+              required: true,
+              options: [
+                { value: `A`, label: `Accomplishment` },
+                { value: `R`, label: `Repeated Grade` },
+                { value: `P`, label: `Psychological Evaluation` },
+                { value: `E`, label: `Educational Evaluation` },
+                { value: `S`, label: `Speech/Language Evaluation` },
+                { value: `O`, label: `Occupational Therapy` },
+                { value: `C`, label: `Professional Counseling` },
+                { value: `X`, label: `Other` }
+              ]
+            }
+          },
+          {
+            type: 'datepicker',
+            key: 'date',
+            className: 'col-sm-3',
+            templateOptions: {
+              label: 'Date'
+            }
+          },
+          {
+            type: 'input',
+            key: 'description',
+            className: 'col-sm-4',
+            templateOptions: {
+              label: 'Details'
+            }
+          }
+        ]
       }
     }
   ];
