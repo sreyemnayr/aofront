@@ -40,6 +40,13 @@ import { ApplicationsEffects } from './applications.effects';
 import { PanelWrapperComponent } from './newstudent/panel-wrapper/panel-wrapper.component';
 import { InputComponent } from './newstudent/formly-types/input/input.component';
 import { RepeatComponent } from './newstudent/formly-types/repeat/repeat.component';
+import { AnimationWrapperComponent } from './newstudent/animation-wrapper/animation-wrapper.component';
+
+export class AnimationWrapper {
+  run(fc) {
+    fc.templateManipulators.preWrapper.push(field => 'animation');
+  }
+}
 
 @NgModule({
   imports: [
@@ -66,7 +73,11 @@ import { RepeatComponent } from './newstudent/formly-types/repeat/repeat.compone
         { name: 'input', component: InputComponent },
         { name: 'repeat', component: RepeatComponent }
       ],
-      wrappers: [{ name: 'panel', component: PanelWrapperComponent }],
+      wrappers: [
+        { name: 'panel', component: PanelWrapperComponent },
+        { name: 'animation', component: AnimationWrapperComponent }
+      ],
+      manipulators: [{ class: AnimationWrapper, method: 'run' }],
       validationMessages: [
         { name: 'required', message: 'This field is required' }
       ]
@@ -90,7 +101,8 @@ import { RepeatComponent } from './newstudent/formly-types/repeat/repeat.compone
     NewstudentComponent,
     PanelWrapperComponent,
     InputComponent,
-    RepeatComponent
+    RepeatComponent,
+    AnimationWrapperComponent
   ],
   providers: [StockMarketService]
 })

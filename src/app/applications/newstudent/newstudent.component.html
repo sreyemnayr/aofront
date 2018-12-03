@@ -1,13 +1,13 @@
 <div class="container">
   <div class="row">
     <div class="col">
-      <h1 class="main-heading">{{ 'aofront.applications.menu.newstudent' | translate }}</h1>
+      <h1 class="main-heading"  [ngClass]="routeAnimationsElements">{{ 'aofront.applications.menu.newstudent' | translate }}</h1>
     </div>
   </div>
 <form [formGroup]="form" (ngSubmit)="submit(model)">
       <div class="row justify-content-center">
       <div class="col-md-8">
-        <mat-card>
+        <mat-card [ngClass]="routeAnimationsElements">
       <formly-form [form]="form" [fields]="fields" [model]="model">
         <button type="submit" mat-raised-button color="primary" [ngClass]="routeAnimationsElements">Submit</button>
       </formly-form>

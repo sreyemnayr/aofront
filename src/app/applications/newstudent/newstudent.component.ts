@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ROUTE_ANIMATIONS_ELEMENTS, NotificationService } from '@app/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { FormlyFieldConfig } from '@ngx-formly/core';
+import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
 import { select, Store } from '@ngrx/store';
 import { State } from '@app/applications/applications.state';
 import { debounceTime, filter, take } from 'rxjs/operators';
@@ -14,30 +14,31 @@ import { Observable } from 'rxjs';
   selector: 'aofront-newstudent',
   templateUrl: './newstudent.component.html',
   styleUrls: ['./newstudent.component.css'],
+  styles: [
+    `
+      ::ng-deep formly-field {
+        display: block !important;
+      }
+    `
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewstudentComponent implements OnInit {
   routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;
 
   form = new FormGroup({});
+  options: FormlyFormOptions = {};
   model = {
-    first_name: '',
-    preferred_name: '',
-    middle_name: '',
-    last_name: '',
-    dob: '',
+    basic_info: {
+      first_name: '',
+      preferred_name: '',
+      middle_name: '',
+      last_name: '',
+      dob: ''
+    },
     schools_attended: [{}]
   };
   fields: FormlyFieldConfig[] = [
-    {
-      key: 'autosave',
-      type: 'toggle',
-      templateOptions: {
-        label: 'Autosave',
-        description: 'Autosave progress?',
-        required: false
-      }
-    },
     {
       key: 'basic_info',
       wrappers: ['panel'],
@@ -50,9 +51,9 @@ export class NewstudentComponent implements OnInit {
             // type: 'email',
             label: 'First name',
             blur: () => {
-              const control = this.form.get('preferred_name');
-              if (!this.model.preferred_name) {
-                control.setValue(this.model.first_name);
+              const control = this.form.get('basic_info.preferred_name');
+              if (!this.model.basic_info.preferred_name) {
+                control.setValue(this.model.basic_info.first_name);
               }
             },
 
@@ -127,7 +128,7 @@ export class NewstudentComponent implements OnInit {
         },
         fieldGroup: [
           {
-            className: 'col-sm-4',
+            className: 'col-sm-12',
             type: 'input',
             key: 'name',
             templateOptions: {
@@ -144,8 +145,17 @@ export class NewstudentComponent implements OnInit {
             }
           },
           {
+            type: 'toggle',
+            key: 'current',
+            className: 'col-sm-3',
+            templateOptions: {
+              label: 'Current school?'
+            }
+          },
+          {
             type: 'datepicker',
             key: 'end_date',
+            hideExpression: 'model.current',
             className: 'col-sm-3',
             templateOptions: {
               label: 'End Date'
@@ -219,10 +229,7 @@ export class NewstudentComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.formValueChanges$ = this.form.valueChanges.pipe(
-      debounceTime(500),
-      filter((form: Form) => form.autosave)
-    );
+    this.formValueChanges$ = this.form.valueChanges.pipe(debounceTime(500));
     this.store
       .pipe(
         select(selectFormState),
