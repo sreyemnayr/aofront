@@ -41,6 +41,7 @@ import { PanelWrapperComponent } from './newstudent/panel-wrapper/panel-wrapper.
 import { InputComponent } from './newstudent/formly-types/input/input.component';
 import { RepeatComponent } from './newstudent/formly-types/repeat/repeat.component';
 import { AnimationWrapperComponent } from './newstudent/animation-wrapper/animation-wrapper.component';
+import { StudentService } from './newstudent/student.service';
 
 export class AnimationWrapper {
   run(fc) {
@@ -104,7 +105,7 @@ export class AnimationWrapper {
     RepeatComponent,
     AnimationWrapperComponent
   ],
-  providers: [StockMarketService]
+  providers: [StockMarketService, StudentService]
 })
 export class ApplicationsModule {
   constructor() {}

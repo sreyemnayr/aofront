@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { Book } from './books.model';
+import { Student } from './components/crud.component';
 
 export enum BookActionTypes {
   UPSERT_ONE = '[Books] Upsert One',
@@ -8,7 +8,7 @@ export enum BookActionTypes {
 
 export class ActionBooksUpsertOne implements Action {
   readonly type = BookActionTypes.UPSERT_ONE;
-  constructor(readonly payload: { book: Book }) {}
+  constructor(readonly payload: { book: Student }) {}
 }
 
 export class ActionBooksDeleteOne implements Action {

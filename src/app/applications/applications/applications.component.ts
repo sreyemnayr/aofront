@@ -21,18 +21,22 @@ export class ApplicationsComponent implements OnInit {
   isAuthenticated$: Observable<boolean>;
 
   applications = [
-    { link: 'newstudent', label: 'aofront.applications.menu.newstudent' },
-    { link: 'todos', label: 'aofront.applications.menu.todos' },
-    { link: 'stock-market', label: 'aofront.applications.menu.stocks' },
-    { link: 'theming', label: 'aofront.applications.menu.theming' },
-    { link: 'crud', label: 'aofront.applications.menu.crud' },
-    { link: 'form', label: 'aofront.applications.menu.form' },
-    { link: 'notifications', label: 'aofront.applications.menu.notifications' },
     {
-      link: 'authenticated',
-      label: 'aofront.applications.menu.auth',
+      link: 'newstudent',
+      label: 'aofront.applications.menu.newstudent',
       auth: true
     }
+    // { link: 'todos', label: 'aofront.applications.menu.todos' },
+    // { link: 'stock-market', label: 'aofront.applications.menu.stocks' },
+    // { link: 'theming', label: 'aofront.applications.menu.theming' },
+    // { link: 'crud', label: 'aofront.applications.menu.crud' },
+    // { link: 'form', label: 'aofront.applications.menu.form' },
+    // { link: 'notifications', label: 'aofront.applications.menu.notifications' },
+    // {
+    //   link: 'authenticated',
+    //   label: 'aofront.applications.menu.auth',
+    //   auth: true
+    // }
   ];
 
   constructor(private store: Store<State>) {}

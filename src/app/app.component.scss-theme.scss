@@ -1,5 +1,9 @@
 @import '~@angular/material/theming';
 
+.mat-form-field-infix {
+  font-size: smaller;
+}
+
 @mixin aofront-app-component-theme($theme) {
   $primary: map-get($theme, primary);
   $accent: map-get($theme, accent);
@@ -66,5 +70,14 @@
   .warning-notification-overlay {
     color: mat-color($warning-colors, default-contrast);
     background-color: mat-color($warning-colors);
+  }
+
+  .bg-accent {
+    color: mat-color($accent, default-contrast);
+    background-color: mat-color($accent);
+  }
+
+  .toolbar-spacer {
+    flex: 1 1 auto;
   }
 }

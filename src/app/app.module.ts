@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 
 import { SharedModule } from '@app/shared';
 import { CoreModule } from '@app/core';
+import { UserService } from '@app/core/user.service';
 
 import { SettingsModule } from './settings';
 import { StaticModule } from './static';
@@ -38,7 +39,7 @@ import { FormlyMaterialModule } from '@ngx-formly/material';
     FormlyMaterialModule
   ],
   declarations: [AppComponent],
-  providers: [],
+  providers: [UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

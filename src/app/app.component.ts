@@ -2,6 +2,7 @@ import browser from 'browser-detect';
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { UserService } from '@app/core/user.service';
 
 import {
   ActionAuthLogin,
@@ -49,9 +50,12 @@ export class AppComponent implements OnInit {
   language$: Observable<string>;
   theme$: Observable<string>;
 
+  public user: any;
+
   constructor(
     private store: Store<AppState>,
-    private storageService: LocalStorageService
+    private storageService: LocalStorageService,
+    public _userService: UserService
   ) {}
 
   private static isIEorEdgeOrSafari() {
@@ -59,6 +63,11 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.user = {
+      username: '',
+      password: ''
+    };
+
     this.storageService.testLocalStorage();
     if (AppComponent.isIEorEdgeOrSafari()) {
       this.store.dispatch(
@@ -84,5 +93,22 @@ export class AppComponent implements OnInit {
 
   onLanguageSelect({ value: language }) {
     this.store.dispatch(new ActionSettingsChangeLanguage({ language }));
+  }
+
+  login() {
+    this._userService.login({
+      username: this.user.username,
+      password: this.user.password
+    });
+    // this.store.dispatch(new ActionAuthLogin());
+  }
+
+  refreshToken() {
+    this._userService.refreshToken();
+  }
+
+  logout() {
+    this._userService.logout();
+    // this.store.dispatch(new ActionAuthLogout());
   }
 }

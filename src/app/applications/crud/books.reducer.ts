@@ -1,33 +1,27 @@
 import { createEntityAdapter, EntityAdapter } from '@ngrx/entity';
 
-import { Book, BookState } from './books.model';
+import { Student, StudentState } from './components/crud.component';
 import { BookActionTypes, BookActions } from './books.actions';
 
-export function sortByTitle(a: Book, b: Book): number {
-  return a.title.localeCompare(b.title);
+export function sortByTitle(a: Student, b: Student): number {
+  return a.basic_info.first_name.localeCompare(b.basic_info.first_name);
 }
 
-export const bookAdapter: EntityAdapter<Book> = createEntityAdapter<Book>({
-  sortComparer: sortByTitle
-});
-
-export const initialState: BookState = bookAdapter.getInitialState({
-  ids: ['123'],
-  entities: {
-    '123': {
-      id: '123',
-      title: 'Reactive Programming with Angular and ngrx',
-      author: 'Oren Farhi',
-      description:
-        'Learn to Harness the Power of Reactive Programming with RxJS and ngrx Extensions'
-    }
+export const bookAdapter: EntityAdapter<Student> = createEntityAdapter<Student>(
+  {
+    sortComparer: sortByTitle
   }
+);
+
+export const initialState: StudentState = bookAdapter.getInitialState({
+  ids: [],
+  entities: {}
 });
 
 export function bookReducer(
-  state: BookState = initialState,
+  state: StudentState = initialState,
   action: BookActions
-): BookState {
+): StudentState {
   switch (action.type) {
     case BookActionTypes.UPSERT_ONE:
       return bookAdapter.upsertOne(action.payload.book, state);

@@ -21,6 +21,7 @@ const routes: Routes = [
       {
         path: '',
         redirectTo: 'newstudent',
+
         pathMatch: 'full'
       },
       {
@@ -61,6 +62,7 @@ const routes: Routes = [
       {
         path: 'newstudent',
         component: NewstudentComponent,
+        canActivate: [AuthGuardService],
         data: { title: 'aofront.applications.menu.newstudent' }
       },
       {

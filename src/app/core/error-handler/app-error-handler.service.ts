@@ -13,11 +13,14 @@ export class AppErrorHandler extends ErrorHandler {
   }
 
   handleError(error: Error | HttpErrorResponse) {
-    let displayMessage = 'An error occurred.';
+    let displayMessage = 'An error occurred. ';
 
     if (!environment.production) {
       displayMessage += ' See console for details.';
     }
+    // else {
+    //   displayMessage += error.message;
+    // }
 
     this.notificationsService.error(displayMessage);
 

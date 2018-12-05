@@ -9,6 +9,10 @@ import { bookReducer } from './crud/books.reducer';
 import { formReducer } from './form/form.reducer';
 import { FormState } from './form/form.model';
 import { Book, BookState } from './crud/books.model';
+import {
+  Student,
+  StudentState
+} from '@app/applications/crud/components/crud.component';
 
 export const FEATURE_NAME = 'applications';
 export const selectapplications = createFeatureSelector<
@@ -26,7 +30,7 @@ export interface ApplicationsState {
   todos: TodosState;
   stocks: StockMarketState;
   form: FormState;
-  books: BookState;
+  books: StudentState;
 }
 
 export interface State extends AppState {

@@ -6,9 +6,10 @@ import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
 import { select, Store } from '@ngrx/store';
 import { State } from '@app/applications/applications.state';
 import { debounceTime, filter, take } from 'rxjs/operators';
-import { Form } from '@app/applications/form/form.model';
+// import { Form } from '@app/applications/form/form.model';
 import { selectFormState } from '@app/applications/form/form.selectors';
 import { Observable } from 'rxjs';
+import { StudentService } from '@app/applications/newstudent/student.service';
 
 @Component({
   selector: 'aofront-newstudent',
@@ -29,6 +30,7 @@ export class NewstudentComponent implements OnInit {
   form = new FormGroup({});
   options: FormlyFormOptions = {};
   model = {
+    id: 1,
     basic_info: {
       first_name: '',
       preferred_name: '',
@@ -214,13 +216,14 @@ export class NewstudentComponent implements OnInit {
     }
   ];
 
-  formValueChanges$: Observable<Form>;
+  formValueChanges$: Observable<FormGroup>;
 
   constructor(
     // private fb: FormBuilder,
     private store: Store<State>,
     private translate: TranslateService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private studentService: StudentService
   ) {}
 
   submit(model) {
@@ -236,5 +239,12 @@ export class NewstudentComponent implements OnInit {
         take(1)
       )
       .subscribe(form => this.form.patchValue(form.form));
+
+    this.studentService.getData().subscribe(([model, fields]) => {
+      this.fields = fields;
+      this.model = model;
+      console.log(this.fields);
+      console.log(this.model);
+    });
   }
 }
