@@ -51,16 +51,41 @@
           <button mat-icon-button routerLink="settings" class="d-none d-sm-inline">
             <fa-icon icon="cog"></fa-icon>
           </button>
-          <button *ngIf="(isAuthenticated$ | async)"
+
+          <button
                   mat-icon-button
                   [matMenuTriggerFor]="toolbarUserMenu">
             <fa-icon icon="user-circle"></fa-icon>
           </button>
-          <mat-menu #toolbarUserMenu="matMenu">
+          <mat-menu #toolbarUserMenu="matMenu" >
+            <span *ngIf="(isAuthenticated$ | async)" >
             <button mat-menu-item (click)="logout()">
               <mat-icon><fa-icon icon="power-off"></fa-icon></mat-icon>
               <span>{{ 'aofront.menu.logout' | translate }}</span>
-            </button></mat-menu>
+            </button></span>
+            <div *ngIf="!(isAuthenticated$ | async)" (click)="stopPropagation($event)">
+            <form ngForm (submit)="login()">
+              <div mat-menu-item>
+              <mat-form-field >
+                <mat-label>Username:</mat-label>
+                <input matInput name="login-username" [(ngModel)]="user.username">
+              <mat-error *ngFor="let error of _userService.errors.username">
+                {{ error }}</mat-error>
+              </mat-form-field>
+                </div>
+              <div mat-menu-item>
+                <mat-form-field ><mat-label>Password:</mat-label>
+                <input matInput type="password" name="login-password" [(ngModel)]="user.password">
+                <mat-error *ngFor="let error of _userService.errors.password">
+                {{ error }}</mat-error></mat-form-field></div>
+
+              <button mat-menu-item type="submit" (click)="login()" >Log In</button>
+            </form>
+            </div>
+
+          </mat-menu>
+
+
 
           <span *ngIf="language$ | async as language">
             <mat-select [ngModel]="language" (selectionChange)="onLanguageSelect($event)">
@@ -70,27 +95,7 @@
             </mat-select>
           </span>
         </mat-toolbar-row>
-      <mat-toolbar-row class="bg-accent" *ngIf="!(isAuthenticated$ | async)">
-        <span class="toolbar-spacer"></span>
-        <span>
-          <form ngForm (submit)="login()">
-            <mat-form-field>
-              <mat-label>Username:</mat-label>
-              <input matInput name="login-username" [(ngModel)]="user.username">
-            <mat-error *ngFor="let error of _userService.errors.username">
-              {{ error }}</mat-error>
-            </mat-form-field>
 
-              <mat-form-field><mat-label>Password:</mat-label>
-              <input matInput type="password" name="login-password" [(ngModel)]="user.password">
-              <mat-error *ngFor="let error of _userService.errors.password">
-              {{ error }}</mat-error></mat-form-field>
-
-            <button mat-stroked-button type="submit" (click)="login()" >Log In</button>
-          </form>
-          </span>
-
-        </mat-toolbar-row>
           </mat-toolbar>
       </div>
 

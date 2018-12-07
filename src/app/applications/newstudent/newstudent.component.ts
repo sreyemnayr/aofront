@@ -240,11 +240,11 @@ export class NewstudentComponent implements OnInit {
       )
       .subscribe(form => this.form.patchValue(form.form));
 
-    this.studentService.getData().subscribe(([model, fields]) => {
+    /*this.studentService.getData().subscribe(([model, fields]) => {
       this.fields = fields;
       this.model = model;
       console.log(this.fields);
       console.log(this.model);
-    });
+    });*/
   }
 }

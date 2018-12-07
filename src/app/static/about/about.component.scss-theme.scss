@@ -1,5 +1,14 @@
 @import '~@angular/material/theming';
 
+mat-form-field {
+  margin-left: 1.25rem;
+  width: calc(100% - 2.5rem);
+}
+
+.mat-tab-label {
+  width: 100%;
+}
+
 @mixin aofront-about-component-theme($theme) {
   $primary: map-get($theme, primary);
   $accent: map-get($theme, accent);

@@ -83,14 +83,6 @@ export class AppComponent implements OnInit {
     this.theme$ = this.store.pipe(select(selectEffectiveTheme));
   }
 
-  onLoginClick() {
-    this.store.dispatch(new ActionAuthLogin());
-  }
-
-  onLogoutClick() {
-    this.store.dispatch(new ActionAuthLogout());
-  }
-
   onLanguageSelect({ value: language }) {
     this.store.dispatch(new ActionSettingsChangeLanguage({ language }));
   }
@@ -110,5 +102,10 @@ export class AppComponent implements OnInit {
   logout() {
     this._userService.logout();
     // this.store.dispatch(new ActionAuthLogout());
+  }
+
+  stopPropagation(event) {
+    event.stopPropagation();
+    // console.log("Clicked!");
   }
 }

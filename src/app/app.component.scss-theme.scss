@@ -1,9 +1,5 @@
 @import '~@angular/material/theming';
 
-.mat-form-field-infix {
-  font-size: smaller;
-}
-
 @mixin aofront-app-component-theme($theme) {
   $primary: map-get($theme, primary);
   $accent: map-get($theme, accent);

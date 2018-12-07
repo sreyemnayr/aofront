@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import {
@@ -7,13 +7,16 @@ import {
   routeAnimations,
   AppState,
   LocalStorageService,
-  selectIsAuthenticated
+  selectIsAuthenticated,
+  NotificationService
 } from '@app/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
+export const TOKEN_KEY = 'TOKEN';
+
 @Injectable()
-export class UserService {
+export class UserService implements OnInit {
   isAuthenticated$: Observable<boolean>;
 
   // http options used for making API calls
@@ -34,8 +37,11 @@ export class UserService {
   constructor(
     private http: HttpClient,
     private store: Store<AppState>,
-    private storageService: LocalStorageService
+    private storageService: LocalStorageService,
+    private notificationService: NotificationService
   ) {
+    this.token = this.storageService.getItem(TOKEN_KEY);
+
     this.httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
@@ -49,6 +55,7 @@ export class UserService {
         data => {
           this.updateData(data['token']);
           this.store.dispatch(new ActionAuthLogin());
+          this.notificationService.info('Logged in');
         },
         err => {
           this.errors = err['error'];
@@ -78,11 +85,14 @@ export class UserService {
     this.token = null;
     this.token_expires = null;
     this.username = null;
+    this.storageService.setItem(TOKEN_KEY, null);
     this.store.dispatch(new ActionAuthLogout());
+    this.notificationService.info('Logged out');
   }
 
   private updateData(token) {
     this.token = token;
+    this.storageService.setItem(TOKEN_KEY, token);
     this.errors = [];
 
     // decode the token to read the username and expiration timestamp
@@ -90,5 +100,11 @@ export class UserService {
     const token_decoded = JSON.parse(window.atob(token_parts[1]));
     this.token_expires = new Date(token_decoded.exp * 1000);
     this.username = token_decoded.username;
+  }
+
+  ngOnInit(): void {
+    if (this.token !== '') {
+      this.refreshToken();
+    }
   }
 }

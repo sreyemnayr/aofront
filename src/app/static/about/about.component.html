@@ -1,8 +1,66 @@
 <div class="background">
   <div class="gradient">
     <div class="container">
-      <h1>Apply to St. George's Episcopal School</h1>
-      <div class="actions">
+      <h1 [ngClass]="routeAnimationsElements">Welcome!</h1>
+
+      <div class="row justify-content-center">
+      <div class="col-md-8">
+      <mat-card *ngIf="!(isAuthenticated$ | async)" [ngClass]="routeAnimationsElements">
+          <mat-tab-group dynamicHeight >
+            <mat-tab label="Sign Up">
+              <mat-card>
+              <form ngForm (submit)="console.log(form)">
+
+              <mat-form-field [ngClass]="routeAnimationsElements">
+                <mat-label>Your Name</mat-label>
+                <input matInput name="signup-name" [(ngModel)]="user.username">
+
+              </mat-form-field><br />
+
+                <mat-form-field [ngClass]="routeAnimationsElements">
+                <mat-label>E-mail</mat-label>
+                <input matInput type="email" name="signup-email" [(ngModel)]="user.email">
+
+              </mat-form-field><br />
+
+                <mat-form-field [ngClass]="routeAnimationsElements"><mat-label>Password</mat-label>
+                <input matInput type="password" name="signup-password" [(ngModel)]="user.password">
+                </mat-form-field><br />
+
+                <mat-form-field [ngClass]="routeAnimationsElements"><mat-label>Confirm Password</mat-label>
+                <input matInput type="password" name="signup-password" [(ngModel)]="user.password">
+                </mat-form-field><br />
+
+              <button mat-raised-button type="submit" (click)="login()" color="primary" [ngClass]="routeAnimationsElements">Log In</button>
+            </form>
+                </mat-card>
+            </mat-tab>
+            <mat-tab label="Sign In">
+              <mat-card>
+              <form ngForm (submit)="login()">
+
+              <mat-form-field >
+                <mat-label>Username:</mat-label>
+                <input matInput name="login-username" [(ngModel)]="user.username" [ngClass]="routeAnimationsElements">
+              <mat-error *ngFor="let error of _userService.errors.username">
+                {{ error }}</mat-error>
+              </mat-form-field><br />
+
+                <mat-form-field ><mat-label>Password:</mat-label>
+                <input matInput type="password" name="login-password" [(ngModel)]="user.password" [ngClass]="routeAnimationsElements">
+                <mat-error *ngFor="let error of _userService.errors.password">
+                {{ error }}</mat-error></mat-form-field><br />
+
+              <button mat-raised-button type="submit" (click)="login()" color="primary" [ngClass]="routeAnimationsElements">Log In</button>
+            </form>
+                </mat-card>
+            </mat-tab>
+          </mat-tab-group>
+
+      </mat-card>
+      </div></div>
+
+      <div class="actions" *ngIf="(isAuthenticated$ | async)">
         <a [ngClass]="routeAnimationsElements" mat-raised-button class="actions-main" color="primary" routerLink="../tours">
           {{ 'aofront.menu.tours' | translate }}
         </a>

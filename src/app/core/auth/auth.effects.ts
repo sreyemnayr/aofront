@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Action } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { tap } from 'rxjs/operators';
+// import { UserService } from '@app/core/user.service';
 
 import { LocalStorageService } from '../local-storage/local-storage.service';
 
@@ -20,14 +21,15 @@ export class AuthEffects {
     private actions$: Actions<Action>,
     private localStorageService: LocalStorageService,
     private router: Router
-  ) {}
+  ) // private _userService: UserService,
+  {}
 
   @Effect({ dispatch: false })
   login = this.actions$.pipe(
     ofType<ActionAuthLogin>(AuthActionTypes.LOGIN),
-    tap(() =>
-      this.localStorageService.setItem(AUTH_KEY, { isAuthenticated: true })
-    )
+    tap(() => {
+      this.localStorageService.setItem(AUTH_KEY, { isAuthenticated: true });
+    })
   );
 
   @Effect({ dispatch: false })
