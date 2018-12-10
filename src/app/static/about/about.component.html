@@ -9,29 +9,33 @@
           <mat-tab-group dynamicHeight >
             <mat-tab label="Sign Up">
               <mat-card>
-              <form ngForm (submit)="console.log(form)">
+              <form ngForm (submit)="signup()">
 
               <mat-form-field [ngClass]="routeAnimationsElements">
                 <mat-label>Your Name</mat-label>
-                <input matInput name="signup-name" [(ngModel)]="user.username">
+                <input matInput name="signup-name" [(ngModel)]="newuser.username">
 
               </mat-form-field><br />
 
                 <mat-form-field [ngClass]="routeAnimationsElements">
                 <mat-label>E-mail</mat-label>
-                <input matInput type="email" name="signup-email" [(ngModel)]="user.email">
+                <input matInput type="email" name="signup-email" [(ngModel)]="newuser.email">
+                  <mat-error *ngFor="let error of _userService.errors.username">
+                {{ error }}</mat-error>
 
               </mat-form-field><br />
 
                 <mat-form-field [ngClass]="routeAnimationsElements"><mat-label>Password</mat-label>
-                <input matInput type="password" name="signup-password" [(ngModel)]="user.password">
+                <input matInput type="password" name="signup-password1" [(ngModel)]="newuser.password1">
+                  <mat-error *ngFor="let error of _userService.errors.password1; trackBy: trackByFunction">
+                {{ error }}</mat-error>
                 </mat-form-field><br />
 
                 <mat-form-field [ngClass]="routeAnimationsElements"><mat-label>Confirm Password</mat-label>
-                <input matInput type="password" name="signup-password" [(ngModel)]="user.password">
+                <input matInput type="password" name="signup-password2" [(ngModel)]="newuser.password2">
                 </mat-form-field><br />
 
-              <button mat-raised-button type="submit" (click)="login()" color="primary" [ngClass]="routeAnimationsElements">Log In</button>
+              <button mat-raised-button type="submit" color="primary" [ngClass]="routeAnimationsElements">Log In</button>
             </form>
                 </mat-card>
             </mat-tab>

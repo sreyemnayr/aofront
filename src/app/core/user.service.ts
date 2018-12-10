@@ -50,7 +50,7 @@ export class UserService implements OnInit {
   // Uses http.post() to get an auth token from djangorestframework-jwt endpoint
   public login(user) {
     this.http
-      .post('/api-token-auth/', JSON.stringify(user), this.httpOptions)
+      .post('/rest-auth/login/', JSON.stringify(user), this.httpOptions)
       .subscribe(
         data => {
           this.updateData(data['token']);
@@ -61,6 +61,32 @@ export class UserService implements OnInit {
           this.errors = err['error'];
         }
       );
+  }
+
+  public signup(user) {
+    this.http
+      .post('/rest-auth/registration/', JSON.stringify(user), this.httpOptions)
+      .subscribe(
+        data => {
+          this.updateData(data['token']);
+          this.store.dispatch(new ActionAuthLogin());
+          this.notificationService.info('Logged in');
+        },
+        err => {
+          let message = '';
+
+          for (const k in err['error']) {
+            if (k) {
+              for (const v of err['error'][k]) {
+                message += k + ': ' + v + ' \n ';
+              }
+            }
+          }
+
+          this.notificationService.error(message);
+        }
+      );
+    console.log(this);
   }
 
   // Refreshes the JWT token, to extend the time the user is logged in

@@ -18,12 +18,13 @@ import { select, Store } from '@ngrx/store';
   selector: 'aofront-about',
   templateUrl: './about.component.html',
   styleUrls: ['./about.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.Default,
   animations: [routeAnimations]
 })
 export class AboutComponent implements OnInit {
   routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;
   public user: any;
+  public newuser: any;
   constructor(
     public _userService: UserService,
     private store: Store<AppState>
@@ -34,6 +35,12 @@ export class AboutComponent implements OnInit {
     this.user = {
       username: '',
       password: ''
+    };
+    this.newuser = {
+      username: '',
+      password1: '',
+      password2: '',
+      email: ''
     };
 
     this.isAuthenticated$ = this.store.pipe(select(selectIsAuthenticated));
@@ -46,6 +53,16 @@ export class AboutComponent implements OnInit {
     // this.store.dispatch(new ActionAuthLogin());
   }
 
+  signup() {
+    this._userService.signup({
+      username: this.newuser.username,
+      password1: this.newuser.password1,
+      password2: this.newuser.password2,
+      email: this.newuser.email
+    });
+    // this.store.dispatch(new ActionAuthLogin());
+  }
+
   refreshToken() {
     this._userService.refreshToken();
   }
@@ -53,5 +70,10 @@ export class AboutComponent implements OnInit {
   logout() {
     this._userService.logout();
     // this.store.dispatch(new ActionAuthLogout());
+  }
+
+  public trackByFunction(index, item) {
+    if (!item) return null;
+    return index;
   }
 }
