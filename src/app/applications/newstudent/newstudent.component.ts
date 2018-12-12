@@ -1,4 +1,10 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  Input,
+  ChangeDetectorRef
+} from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ROUTE_ANIMATIONS_ELEMENTS, NotificationService } from '@app/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -29,6 +35,11 @@ export class NewstudentComponent implements OnInit {
 
   form = new FormGroup({});
   options: FormlyFormOptions = {};
+
+  @Input()
+  editing = false;
+
+  @Input()
   model = {
     id: 1,
     basic_info: {
@@ -36,7 +47,8 @@ export class NewstudentComponent implements OnInit {
       preferred_name: '',
       middle_name: '',
       last_name: '',
-      dob: ''
+      dob: '',
+      gender: ''
     },
     schools_attended: [{}]
   };
@@ -149,7 +161,7 @@ export class NewstudentComponent implements OnInit {
           {
             type: 'toggle',
             key: 'current',
-            className: 'col-sm-3',
+            className: 'col-sm-4',
             templateOptions: {
               label: 'Current school?'
             }
@@ -218,17 +230,50 @@ export class NewstudentComponent implements OnInit {
 
   formValueChanges$: Observable<FormGroup>;
 
+  editStudent$: Observable<any>;
+
+  public students: any;
+  public students$: Observable<any>;
+
   constructor(
     // private fb: FormBuilder,
     private store: Store<State>,
     private translate: TranslateService,
     private notificationService: NotificationService,
-    private studentService: StudentService
+    public studentService: StudentService,
+    private ref: ChangeDetectorRef
   ) {}
 
   submit(model) {
     console.log(model);
     this.notificationService.info(model.first_name);
+  }
+
+  loadStudent(id) {
+    const aStudent = this.studentService.getStudent(id);
+
+    aStudent.subscribe(value => {
+      // this.form.get('first_name').setValue(value.first_name);
+      // this.form.get('last_name').setValue(value.last_name);
+      // this.form.get('id').setValue(value.first_name);
+      this.model = {
+        ...this.model,
+        id: value.id,
+        basic_info: {
+          ...this.model.basic_info,
+          first_name: value.first_name,
+          last_name: value.last_name,
+          preferred_name: value.preferred_name,
+          middle_name: value.middle_name,
+          gender: value.gender,
+          dob: value.dob
+        }
+      };
+      this.editing = true;
+
+      this.ref.markForCheck();
+    });
+    console.log(aStudent);
   }
 
   ngOnInit() {
@@ -239,6 +284,8 @@ export class NewstudentComponent implements OnInit {
         take(1)
       )
       .subscribe(form => this.form.patchValue(form.form));
+
+    this.studentService.getStudents();
 
     /*this.studentService.getData().subscribe(([model, fields]) => {
       this.fields = fields;

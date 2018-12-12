@@ -40,11 +40,13 @@ export class UserService implements OnInit {
     private storageService: LocalStorageService,
     private notificationService: NotificationService
   ) {
-    this.token = this.storageService.getItem(TOKEN_KEY);
-
     this.httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
+    this.token = this.storageService.getItem(TOKEN_KEY);
+    if (this.token) {
+      this.refreshToken();
+    }
   }
 
   // Uses http.post() to get an auth token from djangorestframework-jwt endpoint

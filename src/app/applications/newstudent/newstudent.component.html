@@ -1,14 +1,26 @@
+<mat-drawer-container>
+  <mat-drawer opened=true mode="side">
+    <mat-action-list>
+      <mat-list-item *ngFor="let student of studentService.students">
+        <button mat-raised-button color="accent" (click)="loadStudent(student.id)" >{{ student.first_name }}</button>
+      </mat-list-item>
+      <mat-list-item>
+        <button mat-raised-button color="primary" routerLink="applications/newstudent">New</button>
+      </mat-list-item>
+    </mat-action-list>
+    </mat-drawer>
 <div class="container">
   <div class="row">
     <div class="col">
-      <h1 class="main-heading"  [ngClass]="routeAnimationsElements">{{ 'aofront.applications.menu.newstudent' | translate }}</h1>
+      <h1 class="main-heading"  [ngClass]="routeAnimationsElements"><span *ngIf="!editing; else elseBlock">Add Student</span><ng-template #elseBlock>Edit Student - {{model.basic_info.first_name }}</ng-template></h1>
+
     </div>
   </div>
 <form [formGroup]="form" (ngSubmit)="submit(model)">
       <div class="row justify-content-center">
       <div class="col-md-8">
         <mat-card [ngClass]="routeAnimationsElements">
-      <formly-form [form]="form" [fields]="fields" [model]="model">
+      <formly-form [form]="form" [fields]="fields" [(model)]="model">
         <button type="submit" mat-raised-button color="primary" [ngClass]="routeAnimationsElements">Submit</button>
       </formly-form>
         </mat-card>
@@ -16,3 +28,4 @@
       </div>
     </form>
 </div>
+</mat-drawer-container>
