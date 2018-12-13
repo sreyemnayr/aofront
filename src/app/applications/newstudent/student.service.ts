@@ -1,5 +1,6 @@
 import { Injectable, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { formatDate } from '@angular/common';
 import { Observable, forkJoin } from 'rxjs';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { map } from 'rxjs/operators';
@@ -29,24 +30,11 @@ export class StudentService implements OnInit {
 
   setHeaders() {
     this.httpOptions = {
-      headers: new HttpHeaders()
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'JWT ' + this._userService.token
+      })
     };
-    this.httpOptions.headers.set(
-      'Authorization',
-      'JWT ' + this._userService.token
-    );
-  }
-
-  getData(): Observable<any> {
-    console.log(forkJoin([this.getModel(), this.getFields()]));
-    return forkJoin([this.getModel(), this.getFields()]);
-  }
-
-  getModel() {
-    this.setHeaders();
-    return this.http.get<{ any }>('/api/v1/applyonline/students/', {
-      headers: { Authorization: 'JWT ' + this._userService.token }
-    });
   }
 
   getFields() {
@@ -54,6 +42,56 @@ export class StudentService implements OnInit {
     return this.http.options<FormlyFieldConfig[]>('/api/v1/students/', {
       headers: { Authorization: 'JWT ' + this._userService.token }
     });
+  }
+
+  transformStudentModel(model, update = false) {
+    model.basic_info.dob = formatDate(
+      model.basic_info.dob,
+      'yyyy-MM-dd',
+      'en-US'
+    );
+    if (!update) {
+      const families = [];
+      for (const family of model.families) {
+        // families.push((update) ? {'id': family['id']} : {'id': family['id'], 'name': family['name']});
+        families.push({ id: family['id'], name: family['name'] });
+      }
+      return {
+        ...model.basic_info,
+        id: model.id,
+        families: families
+      };
+    } else {
+      return {
+        ...model.basic_info,
+        id: model.id
+      };
+    }
+  }
+
+  updateStudent(model) {
+    let url = '/api/v1/students/';
+    url += model.id + '/';
+    const model_modified = this.transformStudentModel(model, true);
+    this.setHeaders();
+
+    return this.http.put(url, JSON.stringify(model_modified), this.httpOptions);
+  }
+
+  createStudent(model) {
+    const url = '/api/v1/applyonline/students/';
+    const model_modified = this.transformStudentModel(model);
+    this.setHeaders();
+
+    return this.http.post(
+      url,
+      JSON.stringify(model_modified),
+      this.httpOptions
+    );
+  }
+
+  createOrUpdateStudent(model) {
+    return model.id ? this.updateStudent(model) : this.createStudent(model);
   }
 
   getStudents() {
@@ -67,6 +105,11 @@ export class StudentService implements OnInit {
       .pipe(map(res => res['results']));
 
     obj.subscribe(value => (this.students = value));
+  }
+
+  getFamilies() {
+    this.setHeaders();
+    return this._userService.getFamilies(this.httpOptions);
   }
 
   getStudent(id: string = '') {

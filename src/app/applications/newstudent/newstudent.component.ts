@@ -40,8 +40,11 @@ export class NewstudentComponent implements OnInit {
   editing = false;
 
   @Input()
+  families = [];
+
+  @Input()
   model = {
-    id: 1,
+    id: '',
     basic_info: {
       first_name: '',
       preferred_name: '',
@@ -249,31 +252,74 @@ export class NewstudentComponent implements OnInit {
     this.notificationService.info(model.first_name);
   }
 
-  loadStudent(id) {
-    const aStudent = this.studentService.getStudent(id);
+  loadStudent(id = '') {
+    if (id) {
+      const aStudent = this.studentService.getStudent(id);
 
-    aStudent.subscribe(value => {
-      // this.form.get('first_name').setValue(value.first_name);
-      // this.form.get('last_name').setValue(value.last_name);
-      // this.form.get('id').setValue(value.first_name);
+      aStudent.subscribe(value => {
+        // this.form.get('first_name').setValue(value.first_name);
+        // this.form.get('last_name').setValue(value.last_name);
+        // this.form.get('id').setValue(value.first_name);
+        this.model = {
+          ...this.model,
+          id: value.id,
+          basic_info: {
+            ...this.model.basic_info,
+            first_name: value.first_name,
+            last_name: value.last_name,
+            preferred_name: value.preferred_name,
+            middle_name: value.middle_name,
+            gender: value.gender,
+            dob: value.dob
+          }
+        };
+        this.editing = true;
+
+        this.ref.markForCheck();
+      });
+    } else {
       this.model = {
         ...this.model,
-        id: value.id,
+        id: '',
         basic_info: {
           ...this.model.basic_info,
-          first_name: value.first_name,
-          last_name: value.last_name,
-          preferred_name: value.preferred_name,
-          middle_name: value.middle_name,
-          gender: value.gender,
-          dob: value.dob
+          first_name: '',
+          last_name: '',
+          preferred_name: '',
+          middle_name: '',
+          gender: '',
+          dob: ''
         }
       };
-      this.editing = true;
-
+      this.editing = false;
       this.ref.markForCheck();
-    });
-    console.log(aStudent);
+    }
+  }
+
+  createOrUpdateStudent() {
+    this.studentService.createOrUpdateStudent(this.model).subscribe(
+      data => {
+        console.log(data);
+        this.model.id = data['id'];
+        this.editing = true;
+        this.notificationService.info('Student information updated');
+      },
+      err => {
+        let message = '';
+
+        for (const k in err['error']) {
+          if (k) {
+            for (const v of err['error'][k]) {
+              message += k + ': ' + v + ' \n ';
+            }
+          }
+        }
+
+        this.notificationService.error(message);
+        this.studentService.getStudents();
+        this.ref.markForCheck();
+      }
+    );
   }
 
   ngOnInit() {
@@ -286,6 +332,11 @@ export class NewstudentComponent implements OnInit {
       .subscribe(form => this.form.patchValue(form.form));
 
     this.studentService.getStudents();
+
+    this.studentService.getFamilies().subscribe(val => {
+      this.model['families'] = val['results'];
+      console.log(this.model);
+    });
 
     /*this.studentService.getData().subscribe(([model, fields]) => {
       this.fields = fields;

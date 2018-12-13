@@ -20,7 +20,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'newstudent',
+        redirectTo: 'students',
 
         pathMatch: 'full'
       },
@@ -60,7 +60,7 @@ const routes: Routes = [
         data: { title: 'aofront.applications.menu.notifications' }
       },
       {
-        path: 'newstudent',
+        path: 'students',
         component: NewstudentComponent,
         canActivate: [AuthGuardService],
         data: { title: 'aofront.applications.menu.newstudent' }

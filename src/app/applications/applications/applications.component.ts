@@ -22,8 +22,8 @@ export class ApplicationsComponent implements OnInit {
 
   applications = [
     {
-      link: 'newstudent',
-      label: 'aofront.applications.menu.newstudent',
+      link: 'students',
+      label: 'Students',
       auth: true
     }
     // { link: 'todos', label: 'aofront.applications.menu.todos' },

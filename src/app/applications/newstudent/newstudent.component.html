@@ -1,11 +1,11 @@
 <mat-drawer-container>
   <mat-drawer opened=true mode="side">
-    <mat-action-list>
+    <mat-action-list [ngClass]="routeAnimationsElements">
       <mat-list-item *ngFor="let student of studentService.students">
-        <button mat-raised-button color="accent" (click)="loadStudent(student.id)" >{{ student.first_name }}</button>
+        <button mat-raised-button color="accent" (click)="loadStudent(student.id)" [ngClass]="routeAnimationsElements">{{ student.first_name }}</button>
       </mat-list-item>
       <mat-list-item>
-        <button mat-raised-button color="primary" routerLink="applications/newstudent">New</button>
+        <button mat-raised-button color="primary" (click)="loadStudent()" [ngClass]="routeAnimationsElements">+ New</button>
       </mat-list-item>
     </mat-action-list>
     </mat-drawer>
@@ -16,11 +16,12 @@
 
     </div>
   </div>
-<form [formGroup]="form" (ngSubmit)="submit(model)">
+<form [formGroup]="form" (ngSubmit)="createOrUpdateStudent()">
       <div class="row justify-content-center">
       <div class="col-md-8">
         <mat-card [ngClass]="routeAnimationsElements">
       <formly-form [form]="form" [fields]="fields" [(model)]="model">
+        <input type="hidden" name="id" [value]="model.id" />
         <button type="submit" mat-raised-button color="primary" [ngClass]="routeAnimationsElements">Submit</button>
       </formly-form>
         </mat-card>

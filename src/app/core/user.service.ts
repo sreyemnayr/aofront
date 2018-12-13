@@ -130,6 +130,11 @@ export class UserService implements OnInit {
     this.username = token_decoded.username;
   }
 
+  public getFamilies(httpOptions) {
+    const url = '/api/v1/applyonline/families/';
+    return this.http.get(url, httpOptions);
+  }
+
   ngOnInit(): void {
     if (this.token !== '') {
       this.refreshToken();
