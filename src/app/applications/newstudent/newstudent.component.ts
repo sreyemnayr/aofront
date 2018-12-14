@@ -235,8 +235,10 @@ export class NewstudentComponent implements OnInit {
 
   editStudent$: Observable<any>;
 
+  @Input()
   public students: any;
-  public students$: Observable<any>;
+  @Input()
+  public students$: any;
 
   constructor(
     // private fb: FormBuilder,
@@ -303,6 +305,11 @@ export class NewstudentComponent implements OnInit {
         this.model.id = data['id'];
         this.editing = true;
         this.notificationService.info('Student information updated');
+        this.students$ = this.studentService.getStudents();
+        this.students = this.students$.subscribe(value => {
+          this.students = value;
+          this.ref.markForCheck();
+        });
       },
       err => {
         let message = '';
@@ -316,8 +323,6 @@ export class NewstudentComponent implements OnInit {
         }
 
         this.notificationService.error(message);
-        this.studentService.getStudents();
-        this.ref.markForCheck();
       }
     );
   }
@@ -331,8 +336,8 @@ export class NewstudentComponent implements OnInit {
       )
       .subscribe(form => this.form.patchValue(form.form));
 
-    this.studentService.getStudents();
-
+    this.students$ = this.studentService.getStudents();
+    this.students = this.students$.subscribe(value => (this.students = value));
     this.studentService.getFamilies().subscribe(val => {
       this.model['families'] = val['results'];
       console.log(this.model);

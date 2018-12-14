@@ -1,0 +1,39 @@
+<mat-drawer-container>
+  <mat-drawer opened=true mode="side">
+    <mat-action-list [ngClass]="routeAnimationsElements">
+      <mat-list-item>
+        Adults
+      </mat-list-item>
+      <mat-list-item *ngFor="let parent of ( parents$ | async)">
+        <button mat-raised-button color="accent" (click)="loadParent(parent.id)" [ngClass]="routeAnimationsElements">{{ parent.first_name }}</button>
+      </mat-list-item>
+      <mat-list-item>
+        <button mat-raised-button color="primary" (click)="loadParent()" [ngClass]="routeAnimationsElements">+ New</button>
+      </mat-list-item>
+    </mat-action-list>
+    </mat-drawer>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h1 class="main-heading"  [ngClass]="routeAnimationsElements"><span *ngIf="!editing; else elseBlock">Add Family</span><ng-template #elseBlock>Edit {{model.basic_info.name }}</ng-template></h1>
+
+      </div>
+    </div>
+  <form [formGroup]="form" (ngSubmit)="createOrUpdateFamily()">
+        <div class="row justify-content-center">
+        <div class="col-md-10">
+          <mat-card [ngClass]="routeAnimationsElements">
+        <formly-form [form]="form" [fields]="fields" [(model)]="model">
+          <input type="hidden" name="id" [value]="model.id" />
+        </formly-form>
+            <mat-card>
+        <mat-card-actions><button type="submit" mat-raised-button color="primary" [ngClass]="routeAnimationsElements">Submit</button></mat-card-actions>
+
+          </mat-card>
+          </mat-card>
+
+        </div>
+        </div>
+      </form>
+  </div>
+</mat-drawer-container>

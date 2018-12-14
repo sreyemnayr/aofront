@@ -1,7 +1,7 @@
 <mat-drawer-container>
   <mat-drawer opened=true mode="side">
     <mat-action-list [ngClass]="routeAnimationsElements">
-      <mat-list-item *ngFor="let student of studentService.students">
+      <mat-list-item *ngFor="let student of (students$ | async)">
         <button mat-raised-button color="accent" (click)="loadStudent(student.id)" [ngClass]="routeAnimationsElements">{{ student.first_name }}</button>
       </mat-list-item>
       <mat-list-item>

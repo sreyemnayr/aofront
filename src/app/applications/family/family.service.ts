@@ -11,12 +11,12 @@ import { ActionAuthLogin } from '@app/core';
 @Injectable({
   providedIn: 'root'
 })
-export class StudentService implements OnInit {
+export class FamilyService implements OnInit {
   public token = '';
   private httpOptions: any;
-  students$: Observable<Array<any>>;
-  public students: Array<any>;
-  public editStudent: any;
+  familys$: Observable<Array<any>>;
+  public familys: Array<any>;
+  public editFamily: any;
 
   constructor(
     private http: HttpClient,
@@ -39,48 +39,47 @@ export class StudentService implements OnInit {
 
   getFields() {
     this.setHeaders();
-    return this.http.options<FormlyFieldConfig[]>('/api/v1/students/', {
+    return this.http.options<FormlyFieldConfig[]>('/api/v1/familys/', {
       headers: { Authorization: 'JWT ' + this._userService.token }
     });
   }
 
-  transformStudentModel(model, update = false) {
-    model.basic_info.dob = formatDate(
-      model.basic_info.dob,
-      'yyyy-MM-dd',
-      'en-US'
-    );
-    if (!update) {
-      const families = [];
-      for (const family of model.families) {
-        // families.push((update) ? {'id': family['id']} : {'id': family['id'], 'name': family['name']});
-        families.push({ id: family['id'], name: family['name'] });
+  transformFamilyModel(model, update = false) {
+    for (const v in model.parents) {
+      if (model.parents[v].dob) {
+        model.parents[v].dob = formatDate(
+          model.parents[v].dob,
+          'yyyy-MM-dd',
+          'en-US'
+        );
       }
+    }
+
+    if (!update) {
       return {
-        ...model.basic_info,
-        id: model.id,
-        families: families
+        parents: model.parents,
+        ...model.basic_info
       };
     } else {
       return {
-        ...model.basic_info,
-        id: model.id
+        parents: model.parents,
+        ...model.basic_info
       };
     }
   }
 
-  updateStudent(model) {
-    let url = '/api/v1/students/';
+  updateFamily(model) {
+    let url = '/api/v1/applyonline/families/';
     url += model.id + '/';
-    const model_modified = this.transformStudentModel(model, true);
+    const model_modified = this.transformFamilyModel(model, true);
     this.setHeaders();
 
     return this.http.put(url, JSON.stringify(model_modified), this.httpOptions);
   }
 
-  createStudent(model) {
-    const url = '/api/v1/applyonline/students/';
-    const model_modified = this.transformStudentModel(model);
+  createFamily(model) {
+    const url = '/api/v1/applyonline/familys/';
+    const model_modified = this.transformFamilyModel(model);
     this.setHeaders();
 
     return this.http.post(
@@ -90,13 +89,13 @@ export class StudentService implements OnInit {
     );
   }
 
-  createOrUpdateStudent(model) {
-    return model.id ? this.updateStudent(model) : this.createStudent(model);
+  createOrUpdateFamily(model) {
+    return model.id ? this.updateFamily(model) : this.createFamily(model);
   }
 
-  getStudents() {
+  getFamilys() {
     this.setHeaders();
-    const url = '/api/v1/applyonline/students/';
+    const url = '/api/v1/applyonline/families/';
 
     return this.http
       .get(url, {
@@ -105,14 +104,25 @@ export class StudentService implements OnInit {
       .pipe(map(res => res['results']));
   }
 
+  getParents() {
+    this.setHeaders();
+    const url = '/api/v1/applyonline/families/';
+
+    return this.http
+      .get(url, {
+        headers: { Authorization: 'JWT ' + this._userService.token }
+      })
+      .pipe(map(res => res['results'][0]['parents']));
+  }
+
   getFamilies() {
     this.setHeaders();
     return this._userService.getFamilies(this.httpOptions);
   }
 
-  getStudent(id: string = '') {
+  getFamily(id: string = '') {
     this.setHeaders();
-    let url = '/api/v1/applyonline/students/';
+    let url = '/api/v1/applyonline/families/';
     if (id) {
       url += id + '/';
     }
@@ -123,12 +133,14 @@ export class StudentService implements OnInit {
       .pipe(
         map(res => ({
           id: res['id'],
-          first_name: res['first_name'],
-          preferred_name: res['preferred_name'],
-          last_name: res['last_name'],
-          middle_name: res['middle_name'],
-          gender: res['gender'],
-          dob: res['dob']
+          basic_info: {
+            name: res['name'],
+            address: res['address'],
+            home_phone: res['home_phone'],
+            connections: res['connections'],
+            connections_more: res['connections_more']
+          },
+          parents: res['parents']
         }))
       );
   }

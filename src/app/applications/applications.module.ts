@@ -35,6 +35,7 @@ import { FormEffects } from './form/form.effects';
 import { AuthenticatedComponent } from './authenticated/authenticated.component';
 import { NotificationsComponent } from './notifications/components/notifications.component';
 import { NewstudentComponent } from './newstudent/newstudent.component';
+import { FamilyComponent } from './family/family.component';
 
 import { ApplicationsEffects } from './applications.effects';
 import { PanelWrapperComponent } from './newstudent/panel-wrapper/panel-wrapper.component';
@@ -42,6 +43,7 @@ import { InputComponent } from './newstudent/formly-types/input/input.component'
 import { RepeatComponent } from './newstudent/formly-types/repeat/repeat.component';
 import { AnimationWrapperComponent } from './newstudent/animation-wrapper/animation-wrapper.component';
 import { StudentService } from './newstudent/student.service';
+import { FamilyService } from './family/family.service';
 
 export class AnimationWrapper {
   run(fc) {
@@ -103,9 +105,10 @@ export class AnimationWrapper {
     PanelWrapperComponent,
     InputComponent,
     RepeatComponent,
-    AnimationWrapperComponent
+    AnimationWrapperComponent,
+    FamilyComponent
   ],
-  providers: [StockMarketService, StudentService]
+  providers: [StockMarketService, StudentService, FamilyService]
 })
 export class ApplicationsModule {
   constructor() {}

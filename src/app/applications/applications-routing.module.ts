@@ -12,6 +12,7 @@ import { CrudComponent } from './crud/components/crud.component';
 import { FormComponent } from './form/components/form.component';
 import { NotificationsComponent } from './notifications/components/notifications.component';
 import { NewstudentComponent } from './newstudent/newstudent.component';
+import { FamilyComponent } from '@app/applications/family/family.component';
 
 const routes: Routes = [
   {
@@ -25,51 +26,16 @@ const routes: Routes = [
         pathMatch: 'full'
       },
       {
-        path: 'todos',
-        component: TodosContainerComponent,
-        data: { title: 'aofront.applications.menu.todos' }
-      },
-      {
-        path: 'stock-market',
-        component: StockMarketContainerComponent,
-        data: { title: 'aofront.applications.menu.stocks' }
-      },
-      {
-        path: 'theming',
-        component: ParentComponent,
-        data: { title: 'aofront.applications.menu.theming' }
-      },
-      {
-        path: 'crud',
-        redirectTo: 'crud/',
-        pathMatch: 'full'
-      },
-      {
-        path: 'crud/:id',
-        component: CrudComponent,
-        data: { title: 'aofront.applications.menu.crud' }
-      },
-      {
-        path: 'form',
-        component: FormComponent,
-        data: { title: 'aofront.applications.menu.form' }
-      },
-      {
-        path: 'notifications',
-        component: NotificationsComponent,
-        data: { title: 'aofront.applications.menu.notifications' }
-      },
-      {
         path: 'students',
         component: NewstudentComponent,
         canActivate: [AuthGuardService],
         data: { title: 'aofront.applications.menu.newstudent' }
       },
       {
-        path: 'authenticated',
-        component: AuthenticatedComponent,
+        path: 'families',
+        component: FamilyComponent,
         canActivate: [AuthGuardService],
-        data: { title: 'aofront.applications.menu.auth' }
+        data: { title: 'Families' }
       }
     ]
   }

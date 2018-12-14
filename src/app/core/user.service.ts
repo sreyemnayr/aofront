@@ -104,7 +104,11 @@ export class UserService implements OnInit {
           this.updateData(data['token']);
         },
         err => {
-          this.errors = err['error'];
+          // this.errors = err['error'];
+          this.notificationService.info(
+            'Your session expired. Please log back in.'
+          );
+          this.store.dispatch(new ActionAuthLogout());
         }
       );
   }
@@ -128,6 +132,8 @@ export class UserService implements OnInit {
     const token_decoded = JSON.parse(window.atob(token_parts[1]));
     this.token_expires = new Date(token_decoded.exp * 1000);
     this.username = token_decoded.username;
+    this.storageService.setItem(TOKEN_KEY + '_expiration', this.token_expires);
+    this.storageService.setItem(TOKEN_KEY + '_username', this.username);
   }
 
   public getFamilies(httpOptions) {

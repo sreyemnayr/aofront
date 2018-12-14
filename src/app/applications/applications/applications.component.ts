@@ -25,6 +25,11 @@ export class ApplicationsComponent implements OnInit {
       link: 'students',
       label: 'Students',
       auth: true
+    },
+    {
+      link: 'families',
+      label: 'My Family',
+      auth: true
     }
     // { link: 'todos', label: 'aofront.applications.menu.todos' },
     // { link: 'stock-market', label: 'aofront.applications.menu.stocks' },
