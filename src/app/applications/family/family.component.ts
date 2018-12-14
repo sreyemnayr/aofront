@@ -53,7 +53,8 @@ export class FamilyComponent implements OnInit {
       name: '',
       connections: false,
       connections_more: '',
-      address: '',
+      address_search: '',
+      address: {},
       home_phone: ''
     },
     parents: [{}]
@@ -99,12 +100,12 @@ export class FamilyComponent implements OnInit {
           }
         },
         {
-          key: 'address',
-          type: 'input',
+          key: 'address_search',
+          type: 'address',
           className: 'col-sm-11',
           templateOptions: {
             required: false,
-            label: 'address',
+            label: 'Address',
             type: 'text'
           }
         },
@@ -350,6 +351,8 @@ export class FamilyComponent implements OnInit {
   }
 
   createOrUpdateFamily() {
+    console.log(this.model);
+
     this.familyService.createOrUpdateFamily(this.model).subscribe(
       data => {
         console.log(data);

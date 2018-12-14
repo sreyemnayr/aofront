@@ -69,18 +69,22 @@ export class StudentService implements OnInit {
     }
   }
 
-  updateStudent(model) {
+  updateStudent(model, transform = true) {
     let url = '/api/v1/students/';
     url += model.id + '/';
-    const model_modified = this.transformStudentModel(model, true);
+    const model_modified = transform
+      ? this.transformStudentModel(model, true)
+      : model;
     this.setHeaders();
 
     return this.http.put(url, JSON.stringify(model_modified), this.httpOptions);
   }
 
-  createStudent(model) {
+  createStudent(model, transform = true) {
     const url = '/api/v1/applyonline/students/';
-    const model_modified = this.transformStudentModel(model);
+    const model_modified = transform
+      ? this.transformStudentModel(model)
+      : model;
     this.setHeaders();
 
     return this.http.post(
@@ -90,8 +94,10 @@ export class StudentService implements OnInit {
     );
   }
 
-  createOrUpdateStudent(model) {
-    return model.id ? this.updateStudent(model) : this.createStudent(model);
+  createOrUpdateStudent(model, transform = true) {
+    return model.id
+      ? this.updateStudent(model, transform)
+      : this.createStudent(model, transform);
   }
 
   getStudents() {

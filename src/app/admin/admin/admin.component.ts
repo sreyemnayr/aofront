@@ -4,33 +4,29 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { routeAnimations, selectAuth } from '@app/core';
-import { State as BaseSettingsState } from '@app/settings';
-
-import { State as BaseapplicationsState } from '../applications.state';
-
-interface State extends BaseSettingsState, BaseapplicationsState {}
+import { State } from '@app/settings';
 
 @Component({
-  selector: 'aofront-applications',
-  templateUrl: './applications.component.html',
-  styleUrls: ['./applications.component.scss'],
+  selector: 'aofront-admin',
+  templateUrl: './admin.component.html',
+  styleUrls: ['./admin.component.scss'],
   animations: [routeAnimations],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ApplicationsComponent implements OnInit {
+export class AdminComponent implements OnInit {
   isAuthenticated$: Observable<boolean>;
 
   applications = [
     {
-      link: 'students',
-      label: 'Students',
-      auth: true
-    },
-    {
-      link: 'families',
-      label: 'My Family',
+      link: 'flow',
+      label: 'Flow',
       auth: true
     }
+    // {
+    //   link: 'families',
+    //   label: 'My Family',
+    //   auth: true
+    // }
   ];
 
   constructor(private store: Store<State>) {}

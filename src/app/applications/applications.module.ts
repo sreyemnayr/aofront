@@ -45,6 +45,9 @@ import { AnimationWrapperComponent } from './newstudent/animation-wrapper/animat
 import { StudentService } from './newstudent/student.service';
 import { FamilyService } from './family/family.service';
 
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
+import { AddressInputComponent } from '@app/applications/newstudent/formly-types/address/address-input.component';
+
 export class AnimationWrapper {
   run(fc) {
     fc.templateManipulators.preWrapper.push(field => 'animation');
@@ -74,7 +77,8 @@ export class AnimationWrapper {
     FormlyModule.forRoot({
       types: [
         { name: 'input', component: InputComponent },
-        { name: 'repeat', component: RepeatComponent }
+        { name: 'repeat', component: RepeatComponent },
+        { name: 'address', component: AddressInputComponent }
       ],
       wrappers: [
         { name: 'panel', component: PanelWrapperComponent },
@@ -89,7 +93,8 @@ export class AnimationWrapper {
     FormlyMaterialModule,
     FormlyMatToggleModule,
     MatNativeDateModule,
-    FormlyMatDatepickerModule
+    FormlyMatDatepickerModule,
+    GooglePlaceModule
   ],
   declarations: [
     ApplicationsComponent,
@@ -106,7 +111,8 @@ export class AnimationWrapper {
     InputComponent,
     RepeatComponent,
     AnimationWrapperComponent,
-    FamilyComponent
+    FamilyComponent,
+    AddressInputComponent
   ],
   providers: [StockMarketService, StudentService, FamilyService]
 })

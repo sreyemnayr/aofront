@@ -10,7 +10,7 @@
     </mat-action-list>
     </mat-drawer>
 <div class="container">
-  <div class="row">
+  <div class="row justify-content-center">
     <div class="col">
       <h1 class="main-heading"  [ngClass]="routeAnimationsElements"><span *ngIf="!editing; else elseBlock">Add Student</span><ng-template #elseBlock>Edit Student - {{model.basic_info.first_name }}</ng-template></h1>
 

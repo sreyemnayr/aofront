@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RepeatComponent } from './repeat.component';
+import { AddressInputComponent } from './address-input.component';
 
-describe('RepeatComponent', () => {
-  let component: RepeatComponent;
-  let fixture: ComponentFixture<RepeatComponent>;
+describe('InputComponent', () => {
+  let component: AddressInputComponent;
+  let fixture: ComponentFixture<AddressInputComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [RepeatComponent]
+      declarations: [AddressInputComponent]
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RepeatComponent);
+    fixture = TestBed.createComponent(AddressInputComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

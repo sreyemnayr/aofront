@@ -4,13 +4,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthGuardService } from '@app/core';
 
 import { ApplicationsComponent } from './applications/applications.component';
-import { ParentComponent } from './theming/parent/parent.component';
-import { AuthenticatedComponent } from './authenticated/authenticated.component';
-import { TodosContainerComponent } from './todos/components/todos-container.component';
-import { StockMarketContainerComponent } from './stock-market/components/stock-market-container.component';
-import { CrudComponent } from './crud/components/crud.component';
-import { FormComponent } from './form/components/form.component';
-import { NotificationsComponent } from './notifications/components/notifications.component';
 import { NewstudentComponent } from './newstudent/newstudent.component';
 import { FamilyComponent } from '@app/applications/family/family.component';
 

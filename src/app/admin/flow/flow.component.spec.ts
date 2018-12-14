@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AnimationWrapperComponent } from './animation-wrapper.component';
+import { FlowComponent } from './flow.component';
 
-describe('AnimationWrapperComponent', () => {
-  let component: AnimationWrapperComponent;
-  let fixture: ComponentFixture<AnimationWrapperComponent>;
+describe('FlowComponent', () => {
+  let component: FlowComponent;
+  let fixture: ComponentFixture<FlowComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [AnimationWrapperComponent]
+      declarations: [FlowComponent]
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AnimationWrapperComponent);
+    fixture = TestBed.createComponent(FlowComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

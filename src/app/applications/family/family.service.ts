@@ -54,6 +54,9 @@ export class FamilyService implements OnInit {
         );
       }
     }
+    // if (model.basic_info.address) {
+    //   model.basic_info.address = {'raw': model.basic_info.address };
+    // }
 
     if (!update) {
       return {
@@ -135,6 +138,7 @@ export class FamilyService implements OnInit {
           id: res['id'],
           basic_info: {
             name: res['name'],
+            address_search: res['address'] ? res['address']['raw'] : '',
             address: res['address'],
             home_phone: res['home_phone'],
             connections: res['connections'],

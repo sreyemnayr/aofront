@@ -15,6 +15,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyMaterialModule } from '@ngx-formly/material';
 
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
+import { AgGridModule } from 'ag-grid-angular';
+
 @NgModule({
   imports: [
     // angular
@@ -36,7 +39,11 @@ import { FormlyMaterialModule } from '@ngx-formly/material';
 
     FormlyModule.forRoot(),
 
-    FormlyMaterialModule
+    FormlyMaterialModule,
+
+    GooglePlaceModule,
+
+    AgGridModule.withComponents([])
   ],
   declarations: [AppComponent],
   providers: [UserService],
