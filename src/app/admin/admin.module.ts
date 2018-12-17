@@ -33,6 +33,7 @@ import { ApplicationsEffects } from '../applications/applications.effects';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 
 import { FEATURE_NAME, reducers } from '@app/applications/applications.state';
+import { GenderEditorComponent } from './flow/gender-editor/gender-editor.component';
 
 export class AnimationWrapper {
   run(fc) {
@@ -45,7 +46,7 @@ export class AnimationWrapper {
     SharedModule,
     CommonModule,
     AdminRoutingModule,
-    AgGridModule.withComponents([]),
+    AgGridModule.withComponents([GenderEditorComponent]),
     StoreModule.forFeature(FEATURE_NAME, reducers),
     TranslateModule.forChild({
       loader: {
@@ -64,7 +65,7 @@ export class AnimationWrapper {
     FormlyMatDatepickerModule,
     GooglePlaceModule
   ],
-  declarations: [AdminComponent, FlowComponent],
+  declarations: [AdminComponent, FlowComponent, GenderEditorComponent],
   providers: [AppflowService]
 })
 export class AdminModule {

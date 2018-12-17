@@ -53,7 +53,7 @@ export class NewstudentComponent implements OnInit {
       dob: '',
       gender: ''
     },
-    schools_attended: [{}]
+    schools_attended: []
   };
   fields: FormlyFieldConfig[] = [
     {
