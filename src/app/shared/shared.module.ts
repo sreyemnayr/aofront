@@ -51,8 +51,10 @@ import {
   faLightbulb,
   faWindowMaximize,
   faStream,
-  faBook
-} from '@fortawesome/free-solid-svg-icons';
+  faBook,
+  faLongArrowDown,
+  faLongArrowUp
+} from '@fortawesome/pro-solid-svg-icons';
 import {
   faGithub,
   faMediumM,
@@ -62,6 +64,8 @@ import {
 } from '@fortawesome/free-brands-svg-icons';
 
 library.add(
+  faLongArrowDown,
+  faLongArrowUp,
   faBars,
   faUserCircle,
   faPowerOff,

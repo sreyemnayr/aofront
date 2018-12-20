@@ -1,6 +1,6 @@
-<div class="container"><div class="row justify-content-center"><div class="col">
+<div class="container"><div class="row"><div class="col"><button (click)="openCloseGroup('student')">student info</button></div></div><div class="row justify-content-center" style="height: 100%;"><div class="col">
   <ag-grid-angular
-    style="width: 100%; height: 500px;"
+    style="width: 100%; height: 100%;"
     class="ag-theme-material"
     [rowData]="rowData | async"
     [columnDefs]="columnDefs"
@@ -10,6 +10,8 @@
     [frameworkComponents]="frameworkComponents"
     [gridOptions]="gridOptions"
     [enableColResize]="true"
+    [groupHeaderHeight]="0"
+    [defaultColDef]="defaultColDef"
     >
 </ag-grid-angular>
     </div></div></div>

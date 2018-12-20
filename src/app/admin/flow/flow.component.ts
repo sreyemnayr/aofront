@@ -3,6 +3,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AppflowService } from '@app/admin/appflow.service';
 
 import { GenderEditorComponent } from '@app/admin/flow/gender-editor/gender-editor.component';
+import { CustomHeaderComponent } from '@app/admin/flow/custom-header/custom-header.component';
 
 @Component({
   selector: 'aofront-flow',
@@ -12,6 +13,7 @@ import { GenderEditorComponent } from '@app/admin/flow/gender-editor/gender-edit
 })
 export class FlowComponent implements OnInit {
   private frameworkComponents;
+  private defaultColDef;
   private gridOptions;
 
   columnDefs = [
@@ -22,6 +24,7 @@ export class FlowComponent implements OnInit {
     {
       headerName: 'For',
       field: 'applying_for',
+      filter: 'agSetColumnFilter',
       valueFormatter: v => {
         switch (v.value) {
           case -4:
@@ -71,24 +74,43 @@ export class FlowComponent implements OnInit {
     },
     {
       headerName: 'Student',
+      groupId: 'student',
       children: [
+        {
+          headerName: 'Student',
+
+          valueGetter: v => {
+            return (
+              v.data.student.last_name + ', ' + v.data.student.preferred_name
+            );
+          },
+          columnGroupShow: 'closed'
+        },
         {
           headerName: 'First Name',
           field: 'student.first_name',
 
-          editable: true
-          // onCellValueChanged: ret => {
-          //
-          // }
+          editable: true,
+          columnGroupShow: 'open'
+        },
+        {
+          headerName: 'Preferred Name',
+          field: 'student.preferred_name',
+
+          editable: true,
+          columnGroupShow: 'open'
+        },
+        {
+          headerName: 'Middle Name',
+          field: 'student.middle_name',
+
+          editable: true,
+          columnGroupShow: 'open'
         },
         {
           headerName: 'Last Name',
           field: 'student.last_name',
-          columnGroupShow: 'open'
-        },
-        {
-          headerName: 'Date of birth',
-          field: 'student.dob',
+          editable: true,
           columnGroupShow: 'open'
         },
         {
@@ -111,6 +133,12 @@ export class FlowComponent implements OnInit {
           editable: true
         },
         {
+          headerName: 'Date of birth',
+          field: 'student.dob',
+          columnGroupShow: 'open',
+          editable: true
+        },
+        {
           headerName: 'Age (months)',
           field: 'student_age_months',
           columnGroupShow: 'open'
@@ -119,6 +147,44 @@ export class FlowComponent implements OnInit {
           headerName: 'Age (years)',
           field: 'student_age_years',
           columnGroupShow: 'open'
+        }
+      ]
+    },
+    {
+      headerName: 'Family',
+      groupId: 'family',
+      children: [
+        {
+          headerName: 'Family',
+          field: 'student.families[0]',
+          columnGroupShow: 'both',
+          valueGetter: v => {
+            return v.data.student.families[0].name;
+          }
+        },
+        {
+          headerName: 'Address',
+          field: 'student.families[0].address.raw',
+          columnGroupShow: 'open',
+          valueGetter: v => {
+            if (v.data.student.families[0].address) {
+              return v.data.student.families[0].address.raw;
+            } else return '';
+          }
+        },
+        {
+          headerName: 'Parents',
+          field: 'student.families[0].parents',
+          columnGroupShow: 'open',
+          valueGetter: v => {
+            if (v.data.student.families[0].parents) {
+              let parents = '';
+              for (const p of v.data.student.families[0].parents) {
+                parents += p.first_name + ' ' + p.last_name + ' ';
+              }
+              return parents;
+            } else return '';
+          }
         }
       ]
     },
@@ -142,7 +208,8 @@ export class FlowComponent implements OnInit {
 
   constructor(private appflowService: AppflowService) {
     this.frameworkComponents = {
-      genderEditor: GenderEditorComponent
+      genderEditor: GenderEditorComponent,
+      agColumnHeader: CustomHeaderComponent
     };
     this.gridOptions = {
       onCellValueChanged: event => {
@@ -150,8 +217,35 @@ export class FlowComponent implements OnInit {
           .createOrUpdateAppflow(event.data, false)
           .subscribe();
         console.log(event.data);
+      },
+      onFirstDataRendered: event => {
+        this.resizeAllColumns(event);
+      },
+      onColumnGroupOpened: event => {
+        this.resizeAllColumns(event);
       }
     };
+    this.defaultColDef = {
+      width: 100,
+      headerComponentParams: { menuIcon: 'bars' }
+    };
+  }
+
+  private resizeAllColumns(event) {
+    const allColumnIds = [];
+    event.columnApi.getAllColumns().forEach(function(column) {
+      allColumnIds.push(column.colId);
+    });
+    event.columnApi.autoSizeColumns(allColumnIds);
+  }
+
+  public openCloseGroup(name: string) {
+    const group = this.gridOptions.columnApi.getColumnGroup(name);
+    console.log(group);
+    this.gridOptions.columnApi.setColumnGroupOpened(
+      group.groupId,
+      !group.isExpanded()
+    );
   }
 
   ngOnInit() {

@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GenderEditorComponent } from './gender-editor.component';
+import { CustomHeaderComponent } from './custom-header.component';
 
-describe('GenderEditorComponent', () => {
-  let component: GenderEditorComponent;
-  let fixture: ComponentFixture<GenderEditorComponent>;
+describe('CustomHeaderComponent', () => {
+  let component: CustomHeaderComponent;
+  let fixture: ComponentFixture<CustomHeaderComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [GenderEditorComponent]
+      declarations: [CustomHeaderComponent]
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GenderEditorComponent);
+    fixture = TestBed.createComponent(CustomHeaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
